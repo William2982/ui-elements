@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Limitar input number</title>
+</head>
+
+<body>
+    <input type="number" id="numberInput">
+    <p id="formattedNumber"></p>
+
+    <script>
+        // Limitar caracteres inputs number
+        limitInputNumber('input[type="number"]', 10);
+        function limitInputNumber(input, limit) {
+            const inputsNumber = document.querySelectorAll(input);
+            inputsNumber.forEach(element => {
+                element.addEventListener('input', () => {
+                    let cleanedValue = element.value.slice(0, limit).replace(/\D/g, '');
+                    element.value = cleanedValue;
+                    const formattedValue = Number(cleanedValue).toLocaleString();
+
+                    document.getElementById('formattedNumber').innerHTML = `$${formattedValue}`;
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>

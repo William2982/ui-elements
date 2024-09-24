@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla Responsive</title>
+    <style>
+        /* Responsive table */
+        .responsive-table {
+            border: 1px solid #000;
+            overflow: hidden;
+            border-radius: 10px;
+            width: 100%;
+        }
+
+        .responsive-table th,
+        .responsive-table td {
+            text-align: left;
+            padding: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .responsive-table {
+                border: none;
+            }
+
+            .responsive-table thead {
+                display: none;
+            }
+
+            .responsive-table th,
+            .responsive-table td {
+                box-sizing: border-box;
+                display: block;
+                width: 100%;
+            }
+
+            .responsive-table td {
+                position: relative;
+                text-align: right;
+                padding-left: 50%;
+            }
+
+            .responsive-table td::before {
+                content: attr(data-label);
+                position: absolute;
+                font-weight: bold;
+                text-align: left;
+                padding: 10px;
+                width: 50%;
+                left: 0;
+            }
+
+            .responsive-table tr {
+                border: 1px solid #000;
+                display: block;
+                margin-bottom: 15px;
+                border-radius: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>RESPONSIVE TABLE</h1>
+    <table class="responsive-table">
+        <thead>
+            <tr>
+                <th>TITULO 1</th>
+                <th>TITULO 2</th>
+                <th>TITULO 3</th>
+                <th>TITULO 4</th>
+                <th>TITULO 5</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis ab ipsam molestiae pariatur nihil
+                    delectus sapiente? Facere modi sunt dolorem iste esse exercitationem, asperiores corrupti impedit
+                    sit quasi dolor! Consequatur?</td>
+                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis ab ipsam molestiae pariatur nihil
+                    delectus sapiente? Facere modi sunt dolorem iste esse exercitationem, asperiores corrupti impedit
+                    sit quasi dolor! Consequatur?</td>
+                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis ab ipsam molestiae pariatur nihil
+                    delectus sapiente? Facere modi sunt dolorem iste esse exercitationem, asperiores corrupti impedit
+                    sit quasi dolor! Consequatur?</td>
+                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis ab ipsam molestiae pariatur nihil
+                    delectus sapiente? Facere modi sunt dolorem iste esse exercitationem, asperiores corrupti impedit
+                    sit quasi dolor! Consequatur?</td>
+                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis ab ipsam molestiae pariatur nihil
+                    delectus sapiente? Facere modi sunt dolorem iste esse exercitationem, asperiores corrupti impedit
+                    sit quasi dolor! Consequatur?</td>
+            </tr>
+            <tr>
+                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis ab ipsam molestiae pariatur nihil
+                    delectus sapiente? Facere modi sunt dolorem iste esse exercitationem, asperiores corrupti impedit
+                    sit quasi dolor! Consequatur?</td>
+                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis ab ipsam molestiae pariatur nihil
+                    delectus sapiente? Facere modi sunt dolorem iste esse exercitationem, asperiores corrupti impedit
+                    sit quasi dolor! Consequatur?</td>
+                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis ab ipsam molestiae pariatur nihil
+                    delectus sapiente? Facere modi sunt dolorem iste esse exercitationem, asperiores corrupti impedit
+                    sit quasi dolor! Consequatur?</td>
+                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis ab ipsam molestiae pariatur nihil
+                    delectus sapiente? Facere modi sunt dolorem iste esse exercitationem, asperiores corrupti impedit
+                    sit quasi dolor! Consequatur?</td>
+                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis ab ipsam molestiae pariatur nihil
+                    delectus sapiente? Facere modi sunt dolorem iste esse exercitationem, asperiores corrupti impedit
+                    sit quasi dolor! Consequatur?</td>
+            </tr>
+            <tr>
+                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis ab ipsam molestiae pariatur nihil
+                    delectus sapiente? Facere modi sunt dolorem iste esse exercitationem, asperiores corrupti impedit
+                    sit quasi dolor! Consequatur?</td>
+                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis ab ipsam molestiae pariatur nihil
+                    delectus sapiente? Facere modi sunt dolorem iste esse exercitationem, asperiores corrupti impedit
+                    sit quasi dolor! Consequatur?</td>
+                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis ab ipsam molestiae pariatur nihil
+                    delectus sapiente? Facere modi sunt dolorem iste esse exercitationem, asperiores corrupti impedit
+                    sit quasi dolor! Consequatur?</td>
+                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis ab ipsam molestiae pariatur nihil
+                    delectus sapiente? Facere modi sunt dolorem iste esse exercitationem, asperiores corrupti impedit
+                    sit quasi dolor! Consequatur?</td>
+                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis ab ipsam molestiae pariatur nihil
+                    delectus sapiente? Facere modi sunt dolorem iste esse exercitationem, asperiores corrupti impedit
+                    sit quasi dolor! Consequatur?</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        resposniveTable();
+        function resposniveTable() {
+            // Seleccionar la tabla
+            const tableResponsive = '.responsive-table';
+            // Obtener los encabezados de la tabla
+            const headers = Array.from(document.querySelectorAll(`${tableResponsive} th`));
+            // Obtener todas las filas del cuerpo de la tabla
+            const rows = document.querySelectorAll(`${tableResponsive} tbody tr`);
+            // Iterar sobre cada fila
+            rows.forEach(row => {
+                // Iterar sobre cada celda en la fila
+                const cells = Array.from(row.children);
+                cells.forEach((cell, index) => {
+                    // Asignar el atributo data-label basado en el encabezado correspondiente
+                    cell.setAttribute('data-label', headers[index].textContent);
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>

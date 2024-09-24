@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scroll Efecto TikTok con Imágenes</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+
+        body,
+        html {
+            overflow: hidden;
+            height: 100%;
+        }
+
+        .container {
+            scroll-snap-type: y mandatory;
+            flex-direction: column;
+            overflow-y: scroll;
+            display: flex;
+            height: 100vh;
+        }
+
+        .post {
+            border-bottom: 1px solid #000;
+            scroll-snap-align: start;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            flex: 0 0 100vh;
+
+        }
+
+        img {
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="post">
+            <img src="https://via.placeholder.com/800x400?text=Imagen+1" alt=" ">
+        </div>
+        <div class="post">
+            <img src="https://via.placeholder.com/800x400?text=Imagen+2" alt=" ">
+        </div>
+        <div class="post">
+            <img src="https://via.placeholder.com/800x400?text=Imagen+3" alt=" ">
+        </div>
+    </div>
+</body>
+
+</html>

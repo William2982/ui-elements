@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phone Keyboard | Calling</title>
+</head>
+
+<body>
+    <main>
+
+        <div id="dial-container">
+            <input type="text" id="phone-number" placeholder="Número de teléfono" readonly>
+
+            <div id="keypad">
+                <button class="key">1</button>
+                <button class="key">2</button>
+                <button class="key">3</button>
+                <button class="key">4</button>
+                <button class="key">5</button>
+                <button class="key">6</button>
+                <button class="key">7</button>
+                <button class="key">8</button>
+                <button class="key">9</button>
+                <button class="key">*</button>
+                <button class="key">0</button>
+                <button class="key">#</button>
+            </div>
+
+            <button id="call-btn">Llamar</button>
+        </div>
+
+        <div id="call-modal" class="modal">
+            <p id="modal-text"></p>
+        </div>
+
+    </main>
+</body>
+
+</html>
+
+<style>
+    * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+    }
+
+    /* TECLADO LLAMAR */
+    main {
+        overflow-y: auto;
+        padding: 10px;
+        flex: 1;
+        display: flex;
+        height: 100vh;
+    }
+
+    #dial-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        margin: 20px auto;
+        max-width: 400px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    #phone-number {
+        width: 100%;
+        padding: 15px;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        text-align: center;
+        font-size: 24px;
+        background-color: #f0f0f0;
+    }
+
+    #keypad {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .key {
+        padding: 20px;
+        background-color: #000;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    .key:hover {
+        background-color: #ccc;
+    }
+
+    #call-btn {
+        padding: 15px 40px;
+        background-color: #ddd;
+        color: #000;
+        border: none;
+        border-radius: 10px;
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    /* MODAL DE NOTIFICACIÓN */
+    .modal {
+        position: fixed;
+        top: -100px;
+        /* Fuera de la pantalla */
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 400px;
+        background-color: #000;
+        color: #fff;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        opacity: 0;
+        transition: top 0.5s ease, opacity 0.5s ease;
+        z-index: 9999;
+    }
+
+    /* Mostrar modal */
+    .modal.show {
+        top: 20px;
+        /* Desliza hacia abajo */
+        opacity: 1;
+    }
+
+    /* Animación al desaparecer */
+    .modal.hide {
+        top: -100px;
+        opacity: 0;
+    }
+</style>
+
+<script>
+    document.querySelectorAll('.key').forEach(key => {
+        key.addEventListener('click', () => {
+            const phoneNumberInput = document.getElementById('phone-number');
+            phoneNumberInput.value += key.textContent;
+        });
+    });
+
+    document.getElementById('call-btn').addEventListener('click', () => {
+        const phoneNumber = document.getElementById('phone-number').value;
+        if (phoneNumber) {
+            showModal(`Llamando a ${phoneNumber}...`);
+        } else {
+            showModal('Por favor, ingrese un número de teléfono.');
+        }
+    });
+
+    function showModal(message) {
+        const modal = document.getElementById('call-modal');
+        const modalText = document.getElementById('modal-text');
+
+        modalText.textContent = message;
+
+        // Mostrar modal
+        modal.classList.add('show');
+
+        // Ocultar después de 3 segundos
+        setTimeout(() => {
+            modal.classList.remove('show');
+            modal.classList.add('hide');
+
+            // Eliminar la clase 'hide' después de la animación para evitar que se quede en estado oculto
+            setTimeout(() => {
+                modal.classList.remove('hide');
+            }, 500); // Coincide con la duración de la transición
+        }, 3000);
+    }
+</script>

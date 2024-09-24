@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slider</title>
+    <style>
+        .slider {
+            position: relative;
+            user-select: none;
+            overflow: hidden;
+            margin: auto;
+            max-width: 100vw;
+            height: 700px;
+            width: 100%;
+        }
+
+        .slider .list {
+            position: absolute;
+            width: max-content;
+            display: flex;
+            transition: 1s;
+            height: 100%;
+            left: 0;
+            top: 0;
+        }
+
+        .slider .list img {
+            /* object-fit: cover; */
+            max-width: 100vw;
+            height: 100%;
+            width: 100%;
+        }
+
+        .slider .buttons {
+            justify-content: space-between;
+            position: absolute;
+            display: flex;
+            transform: translate(0, -50%);
+            width: 90%;
+            top: 45%;
+            left: 5%;
+        }
+
+        .slider .buttons button {
+            background-color: transparent;
+            font-weight: bold;
+            color: #f6f6f6;
+            cursor: pointer;
+            border: none;
+            border-radius: 50%;
+            font-size: 80px;
+            height: 50px;
+            opacity: 20%;
+            width: 50px;
+        }
+
+        .slider .buttons button:hover {
+            transition: transform 0.3s;
+            transform: scale(1.1);
+            opacity: 50%;
+        }
+
+        .slider .dots {
+            justify-content: center;
+            position: absolute;
+            color: #f6f6f6;
+            display: flex;
+            bottom: 10px;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            left: 0;
+        }
+
+        .slider .dots li {
+            background-color: #ffffff;
+            list-style: none;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: 1s;
+            height: 10px;
+            margin: 20px;
+            opacity: 30%;
+            width: 10px;
+        }
+
+        .slider .dots li:hover {
+            opacity: 80%;
+            transition: 0s;
+        }
+
+        .slider .dots li.active {
+            opacity: 50%;
+            width: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slider">
+        <div class="list">
+            <div class="item">
+                <img src="img/Captura de pantalla (1).png" alt=" ">
+            </div>
+            <div class="item">
+                <img src="img/Captura de pantalla (2).png" alt=" ">
+            </div>
+            <div class="item">
+                <img src="img/Captura de pantalla (3).png" alt=" ">
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button id="prev">&#10094;</button>
+            <button id="next">&#10095;</button>
+        </div>
+
+        <ul class="dots"></ul>
+    </div>
+
+    <script>
+        const items = document.querySelectorAll('.slider .list .item');
+        const dotsContainer = document.querySelector('.slider .dots');
+        const list = document.querySelector('.slider .list');
+        const prev = document.querySelector('.slider #prev');
+        const next = document.querySelector('.slider #next');
+
+        const lengthItems = items.length - 1;
+        let refreshSlider = setInterval(() => { next.click() }, 3000);
+        let active = 0;
+
+        function reloadSlider() {
+            let checkLeft = items[active].offsetLeft;
+            list.style.left = `-${checkLeft}px`;
+            const lastActiveDot = document.querySelector('.slider .dots li.active');
+            if (lastActiveDot) {
+                lastActiveDot.classList.remove('active');
+            }
+            const dots = document.querySelectorAll('.slider .dots li');
+            dots[active].classList.add('active');
+            clearInterval(refreshSlider);
+            refreshSlider = setInterval(() => { next.click() }, 3000);
+        }
+
+        dotsContainer.innerHTML = '';
+        items.forEach((item, index) => {
+            const dot = document.createElement('li');
+            if (index === 0) {
+                dot.classList.add('active');
+            }
+            dot.addEventListener('click', () => {
+                active = index;
+                reloadSlider();
+            });
+            dotsContainer.appendChild(dot);
+        });
+
+        window.addEventListener('resize', () => {
+            reloadSlider();
+        });
+
+        next.addEventListener('click', () => {
+            if (active + 1 > lengthItems) {
+                active = 0;
+            } else {
+                active += 1;
+            }
+            reloadSlider();
+        });
+
+        prev.addEventListener('click', () => {
+            if (active - 1 < 0) {
+                active = lengthItems;
+            } else {
+                active -= 1;
+            }
+            reloadSlider();
+        });
+    </script>
+</body>
+
+</html>

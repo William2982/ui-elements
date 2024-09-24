@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar Nombre de Archivo</title>
+</head>
+
+<body>
+    <input type="file" id="fileInput">
+    <button onclick="getFileName()">Obtener Nombre del Archivo</button>
+    <p id="fileName"></p>
+
+    <script>
+        function getFileName() {
+            const fileInput = document.getElementById('fileInput').files[0];
+            document.getElementById('fileName').textContent = `Nombre del archivo: ${fileInput.name}`;
+        }
+    </script>
+</body>
+
+</html>

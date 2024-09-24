@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrusel de 3 Ítems por Slide</title>
+    <style>
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            margin: auto;
+            border-radius: 30px;
+            width: 80%;
+        }
+
+        .carousel {
+            transition: transform 0.5s ease-in-out;
+            display: flex;
+        }
+
+        .carousel-item {
+            box-sizing: border-box;
+            flex-direction: column;
+            display: flex;
+            min-width: 33.33%;
+            padding: 10px;
+        }
+
+        .carousel-image img {
+            object-fit: cover;
+            display: block;
+            border-radius: 15px 15px 0 0;
+            transition: opacity 0.7s;
+            height: 200px;
+            width: 100%;
+        }
+
+        .carousel-image img:hover {
+            opacity: 0.8;
+        }
+
+        .carousel-text {
+            background-color: #f1f1f1;
+            text-align: left;
+            border-radius: 0 0 15px 15px;
+            font-size: 16px;
+            padding: 10px;
+            flex: 1;
+        }
+
+        .carousel-text h3 {
+            color: #000;
+            margin: 0 10px 0 0;
+            font-size: 1.8em;
+            padding: 15px;
+        }
+
+        .carousel-text p {
+            color: #000;
+            padding: 0 15px 15px;
+            font-size: 1.1em;
+        }
+
+        .carousel-button {
+            transition: transform 0.3s ease;
+            position: absolute;
+            cursor: pointer;
+            color: white;
+            border: none;
+            background-color: rgba(0, 0, 0, 0.5);
+            transform: translateY(-50%);
+            border-radius: 10px;
+            font-size: 24px;
+            padding: 10px;
+            z-index: 10;
+            top: 50%;
+        }
+
+        .carousel-button:hover {
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-button:active {
+            transform: translateY(-50%) scale(0.9);
+        }
+
+        .prev {
+            left: 10px;
+        }
+
+        .next {
+            right: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .carousel-item {
+                min-width: 100%;
+            }
+
+            .carousel-text {
+                font-size: 14px;
+                padding: 5px;
+            }
+
+            .carousel-text h3 {
+                font-size: 1.5em;
+            }
+
+            .carousel-text p {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="carousel-container">
+        <div class="carousel">
+            <div class="carousel-item">
+                <div class="carousel-image">
+                    <img src="https://via.placeholder.com/300x200?text=Imagen+1" alt=" ">
+                </div>
+                <div class="carousel-text">
+                    <h3>Titulo</h3>
+                    <p>Este es el texto correspondiente a la primera imagen.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="carousel-image">
+                    <img src="https://via.placeholder.com/300x200?text=Imagen+2" alt=" ">
+                </div>
+                <div class="carousel-text">
+                    <h3>Titulo</h3>
+                    <p>Texto de la segunda imagen.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="carousel-image">
+                    <img src="https://via.placeholder.com/300x200?text=Imagen+3" alt=" ">
+                </div>
+                <div class="carousel-text">
+                    <h3>Titulo</h3>
+                    <p>Texto de la tercera imagen.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="carousel-image">
+                    <img src="https://via.placeholder.com/300x200?text=Imagen+4" alt=" ">
+                </div>
+                <div class="carousel-text">
+                    <h3>Titulo</h3>
+                    <p>Texto de la cuarta imagen.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="carousel-image">
+                    <img src="https://via.placeholder.com/300x200?text=Imagen+5" alt=" ">
+                </div>
+                <div class="carousel-text">
+                    <h3>Titulo</h3>
+                    <p>Texto de la quinta imagen.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="carousel-image">
+                    <img src="https://via.placeholder.com/300x200?text=Imagen+6" alt=" ">
+                </div>
+                <div class="carousel-text">
+                    <h3>Titulo</h3>
+                    <p>Texto de la sexta imagen.</p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-button prev" id="btn-prev">&#10094;</button>
+        <button class="carousel-button next" id="btn-next">&#10095;</button>
+    </div>
+
+    <script>
+        // Variables globales
+        let currentSlide = 0;
+        let itemsToShow;
+        let totalSlides;
+        const carousel = document.querySelector('.carousel');
+        const items = document.querySelectorAll('.carousel-item');
+        const next = document.getElementById('btn-next');
+        const prev = document.getElementById('btn-prev');
+
+        // Función para actualizar el número de ítems a mostrar basado en el tamaño de la ventana
+        function updateItemsToShow() {
+            const widthWindow = window.innerWidth;
+            itemsToShow = (widthWindow > 768) ? 3 : 1;
+            totalSlides = Math.ceil(items.length / itemsToShow);
+        }
+
+        // Función para mover el slide en una dirección específica
+        function moveSlide(direction) {
+            return function () {
+                currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+                carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
+            };
+        }
+
+        // Inicializar el número de ítems a mostrar y total de slides
+        updateItemsToShow();
+
+        // Opcional: actualizar el número de ítems a mostrar si se redimensiona la ventana
+        window.addEventListener('resize', updateItemsToShow);
+
+        // Siguiente o anterior slide de carrusel
+        next.addEventListener('click', moveSlide(1));
+        prev.addEventListener('click', moveSlide(-1));
+    </script>
+</body>
+
+</html>
