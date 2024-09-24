@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrusel Automático con Efecto Deslizante</title>
+    <!-- Incluye las bibliotecas de jQuery, jQuery UI y DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Carrusel Automático con Efecto Deslizante</h1>
+        <table id="miTabla" class="display">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Edad</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Juan</td>
+                    <td>25</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Maria</td>
+                    <td>30</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Carlos</td>
+                    <td>28</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
+
+<script>
+    $(document).ready(function () {
+        var table = $('#miTabla').DataTable({
+            "pagingType": "simple", // Usa la paginación simple
+            "pageLength": 1, // Muestra solo una fila por página
+            "lengthChange": false, // Oculta el control para cambiar el número de filas por página
+            "searching": false, // Deshabilita la búsqueda
+            "info": false // Oculta la información sobre el número total de registros
+        });
+        // Función para cambiar a la siguiente página con efecto deslizante
+        setInterval(function () {
+            // Obtiene la fila actualmente visible
+            var visibleRow = table.rows({ 'page': 'current' }).nodes()[0];
+            // Animación de deslizamiento hacia la izquierda
+            $(visibleRow).hide("slide", { direction: "left" }, 500, function () {
+                table.page('next').draw('page');
+                // Obtiene la nueva fila visible y la muestra con efecto deslizante desde la derecha
+                var newVisibleRow = table.rows({ 'page': 'current' }).nodes()[0];
+                $(newVisibleRow).show("slide", { direction: "right" }, 500);
+            });
+        }, 5000); // 5000 milisegundos = 5 segundos
+    });
+</script>

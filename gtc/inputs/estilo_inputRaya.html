@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input con Subrayado en HTML y CSS</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <input type="text" class="inputStyle" placeholder="Ingresa tu texto">
+
+</body>
+
+</html>
+
+<style>
+    .inputStyle {
+        border: none;
+        border-bottom: 2px solid #000;
+        /* Color y grosor del subrayado */
+        outline: none;
+        /* Elimina el contorno al hacer clic */
+    }
+
+    /* Cambia el color del subrayado al enfocar el input */
+    .inputStyle:focus {
+        border-bottom-color: #0066FF;
+    }
+</style>

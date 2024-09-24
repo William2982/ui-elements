@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario</title>
+    <!-- JQUERY -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <!-- JQUERY UI -->
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+
+    <style>
+        * {
+            font-family: "DIN-REGULAR", Sans-serif;
+        }
+
+        /* Titulos */
+        h3 {
+            text-align: center;
+            font-weight: bold;
+            font-size: 25px;
+            margin: 10px 0;
+        }
+
+        /* Backgroud body */
+        .form-container {
+            background-color: #dbdfe8;
+            color: #051637;
+            border-radius: 20px;
+            padding: 20px 50px;
+            margin: 30px 50px;
+        }
+
+        /* Foto form */
+        .foto-container {
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            display: flex;
+            height: 250px;
+        }
+
+        .foto {
+            border: solid 2px #051637;
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            height: 100%;
+            width: 30%;
+        }
+
+        .foto img {
+            opacity: 40%;
+            height: 100%;
+            width: 100%;
+        }
+
+        .foto span {
+            position: absolute;
+            user-select: none;
+            transform: translate(-50%, -50%);
+            font-size: 200px;
+            z-index: 1;
+            left: 50%;
+            top: 50%;
+        }
+
+        /* Inputs form */
+        form .input-container {
+            border-top: 1px solid #00446d;
+            margin: 30px 200px;
+            padding-top: 20px;
+        }
+
+        form .input-container:first-child {
+            border-top: none;
+            padding-top: none;
+        }
+
+        form .input-container input[type="text"],
+        form .input-container select {
+            background-color: #f6f6f6;
+            border: 2px solid #051637;
+            border-radius: 10px;
+            padding: 2px 9px;
+            height: 30px;
+            width: 100%;
+        }
+
+        form .input-container span {
+            display: flex;
+        }
+
+        form .inputs {
+            user-select: none;
+            border-bottom: 5px solid rgb(0 0 0 / 20%);
+        }
+
+        form {
+            box-shadow: 0px 0px 10px rgb(0 0 0 / 20%);
+            border-radius: 10px;
+            padding: 10px 0;
+        }
+
+        form label {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        form .input-container span {
+            color: #555;
+            font-size: 15px;
+        }
+
+        /* Captcha */
+        form .captcha-container {
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            height: 150px;
+        }
+
+        /* Submit button */
+        form .submit-container {
+            border-top: 5px solid rgb(0 0 0 / 20%);
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            padding: 30px 0 15px 0;
+        }
+
+        form button[type="submit"] {
+            border-color: #00446d;
+            background: #00446d;
+            border-style: solid;
+            position: relative;
+            cursor: pointer;
+            color: white;
+            outline: none;
+            border-radius: 22px;
+            border-width: 2px;
+            padding: 8px 18px;
+            font-size: 18px;
+            z-index: 3;
+        }
+
+        form button[type="submit"]:hover {
+            transition: all 0.2s linear;
+            border-color: #7C6F46;
+            background: #7C6F46;
+            color: white;
+        }
+
+        /* Responsive form */
+        @media screen and (max-width:1100px) {
+            .form-container {
+                margin: 0px;
+            }
+
+            form .input-container {
+                margin: 30px 30px;
+                padding-top: 20px;
+            }
+
+            form .input-container input[type="text"],
+            form .input-container select {
+                width: 95%;
+            }
+        }
+
+        @media screen and (max-width:900px) {
+            .foto {
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-container">
+        <h3>Alta Agente</h3>
+
+        <form action="" method="post" enctype="multipart/form-data">
+            <div class="foto-container">
+                <div class="foto">
+                    <span>?</span>
+                    <img src="../Pictures/Screenshots/Captura de pantalla (1).png" alt=" ">
+                </div>
+            </div>
+            <div class="inputs">
+                <div class="input-container">
+                    <label for="nombre">Nombre</label><br>
+                    <input type="text" name="nombre" id="nombre" placeholder="Introduzca su respuesta" maxlength="255"
+                        oninput="validarCaracteres_numLetras(this); countChar('nombre','nombre-counter')">
+                    <span id="nombre-counter">0 caracteres</span>
+                </div>
+                <div class="input-container">
+                    <label for="apellido_paterno">Apellido Paterno</label><br>
+                    <input type="text" name="apellido_paterno" id="apellido_paterno"
+                        placeholder="Introduzca su respuesta" maxlength="255"
+                        oninput="validarCaracteres_numLetras(this); countChar('apellido_paterno','apellido_paterno-counter');">
+                    <span id="apellido_paterno-counter">0 caracteres</span>
+                </div>
+                <div class="input-container">
+                    <label for="apellido_materno">Apellido Materno</label><br>
+                    <input type="text" name="apellido_materno" id="apellido_materno"
+                        placeholder="Introduzca su respuesta"
+                        oninput="validarCaracteres_numLetras(this); countChar('apellido_materno','apellido_materno-counter')">
+                    <span id="apellido_materno-counter">0 caracteres</span>
+                </div>
+                <div class="input-container">
+                    <label for="razon_social">Razón Social</label><br>
+                    <select name="razon_social" id="razon_social" class="Combobox">
+                        <option value="">--Seleccionar--</option>
+                        <option value="1">Razón 1</option>
+                        <option value="2">Razón 2</option>
+                        <option value="3">Razón 3</option>
+                    </select>
+                    <span id="razon_social-counter">0 caracteres</span>
+                </div>
+                <div class="input-container">
+                    <label for="fecha_ingreso">Fecha Ingreso</label><br>
+                    <input type="text" name="fecha_ingreso" id="fecha_ingreso" class="DatePicker"
+                        placeholder="Seleccione una fecha" oninput="validarCaracteres_fechas(this)">
+                </div>
+            </div>
+
+            <div class="captcha-container"></div>
+
+            <div class="submit-container">
+                <button type="submit">Enviar</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            // Datepicker
+            $(".DatePicker").datepicker({
+                dateFormat: 'yy-mm-dd'
+            });
+
+            // Combobox
+            $.widget("custom.combobox", {
+                _create: function () {
+                    this.wrapper = $("<span>")
+                        .addClass("custom-combobox")
+                        .insertAfter(this.element);
+
+                    this.element.hide();
+                    this._createAutocomplete();
+                    this._createShowAllButton();
+                },
+
+                _createAutocomplete: function () {
+                    var selected = this.element.children(":selected"),
+                        value = selected.val() ? selected.text() : "";
+
+                    this.input = $(`<input type="text" id="razon_socialTxt" placeholder="Seleccione una opción" maxlength="255" oninput="validarCaracteres_numLetras(this); countChar('razon_socialTxt','razon_social-counter');">`)
+                        .appendTo(this.wrapper)
+                        .val(value)
+                        .attr("title", "")
+                        .addClass("custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left")
+                        .autocomplete({
+                            delay: 0,
+                            minLength: 0,
+                            source: this._source.bind(this)
+                        })
+                        .tooltip({
+                            classes: {
+                                "ui-tooltip": "ui-state-highlight"
+                            }
+                        });
+
+                    this._on(this.input, {
+                        autocompleteselect: function (event, ui) {
+                            ui.item.option.selected = true;
+                            this._trigger("select", event, {
+                                item: ui.item.option
+                            });
+                        },
+
+                        autocompletechange: "_removeIfInvalid"
+                    });
+                },
+
+                _createShowAllButton: function () {
+                    var input = this.input,
+                        wasOpen = false;
+
+                    $("<a>")
+                        .attr("tabIndex", -1)
+                        .attr("title", "Show All Items")
+                        .tooltip()
+                        .appendTo(this.wrapper)
+                        .button({
+                            icons: {
+                                primary: "ui-icon-triangle-1-s"
+                            },
+                            text: false
+                        })
+                        .removeClass("ui-corner-all")
+                        .addClass("custom-combobox-toggle ui-corner-right")
+                        .on("mousedown", function () {
+                            wasOpen = input.autocomplete("widget").is(":visible");
+                        })
+                        .on("click", function () {
+                            input.trigger("focus");
+
+                            // Close if already visible
+                            if (wasOpen) {
+                                return;
+                            }
+
+                            // Pass empty string as value to search for, displaying all results
+                            input.autocomplete("search", "");
+                        });
+                },
+
+                _source: function (request, response) {
+                    var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i");
+                    response(this.element.children("option").map(function () {
+                        var text = $(this).text();
+                        if (this.value && (!request.term || matcher.test(text)))
+                            return {
+                                label: text,
+                                value: text,
+                                option: this
+                            };
+                    }));
+                },
+
+                _removeIfInvalid: function (event, ui) {
+
+                    // Selected an item, nothing to do
+                    if (ui.item) {
+                        return;
+                    }
+
+                    // Search for a match (case-insensitive)
+                    var value = this.input.val(),
+                        valueLowerCase = value.toLowerCase(),
+                        valid = false;
+                    this.element.children("option").each(function () {
+                        if ($(this).text().toLowerCase() === valueLowerCase) {
+                            this.selected = valid = true;
+                            return false;
+                        }
+                    });
+
+                    // Found a match, nothing to do
+                    if (valid) {
+                        return;
+                    }
+
+                    // Remove invalid value
+                    this.input
+                        .val("")
+                        .attr("title", value + " didn't match any item")
+                        .tooltip("open");
+                    this.element.val("");
+                    this._delay(function () {
+                        this.input.tooltip("close").attr("title", "");
+                    }, 2500);
+                    this.input.autocomplete("instance").term = "";
+                },
+
+                _destroy: function () {
+                    this.wrapper.remove();
+                    this.element.show();
+                }
+            });
+            $(".Combobox").combobox();
+            $("#toggle").on("click", function () {
+                $(".Combobox").toggle();
+            });
+        });
+
+        // Validar caracteres
+        function validarCaracteres_numLetras(e) {
+            let valor = e.value;
+            valor = valor.replace(/[^A-Za-z0-9ñÑ áéíóúÁÉÍÓÚ.,]/g, ''); // Incluye espacios, acentos, puntos y comas
+            e.value = valor;
+        }
+
+        // Validar caracteres de fecha
+        function validarCaracteres_fechas(e) {
+            let valor = e.value;
+            valor = valor.replace(/[^0-9-: ]/g, '');
+            e.value = valor;
+        }
+
+        // Contador de caracteres
+        function countChar(inputId, counterId) {
+            const input = document.getElementById(inputId);
+            const counter = document.getElementById(counterId);
+            const charts = input.value.length;
+            counter.textContent = `${charts} caracteres`;
+        }
+    </script>
+</body>
+
+</html>

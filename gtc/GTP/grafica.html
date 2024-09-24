@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfica</title>
+    <style>
+        :root {
+            --color-primary: #44d4fd;
+            --color-label: #a7a7a7;
+            --font--family: "Euclid Circular A";
+        }
+
+        #area-chart {
+            position: relative;
+        }
+
+        body .apexcharts-tooltip.apexcharts-theme-light {
+            color: var(--color-text);
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            box-shadow: none;
+            border: 0;
+            padding: 8px;
+        }
+
+        .grid {
+            position: absolute;
+            z-index: 0;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 79%;
+            background-repeat: repeating-linear-gradient(to right,
+                    transparent 0% 3%,
+                    #f9f9f9 3% 3.5%,
+                    transparent 3.5% 15.7%);
+        }
+
+        .grid::after {
+            content: "";
+            position: inherit;
+            z-index: 1;
+            top: inherit;
+            bottom: inherit;
+            width: inherit;
+            height: 100%;
+            background: linear-gradient(180deg,
+                    rgba(27, 27, 27, 1),
+                    rgba(27, 27, 27, 0.9),
+                    rgba(27, 27, 27, 1));
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <h2>User Growth</h2>
+        <h3>Year on year comparjson</h3>
+        <div id="area-chart">
+            <div class="grid"></div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script>
+        const colorPrimary = getComputedStyle(document.documentElement).getPropertyValue("--color-primary").trim();
+        const colorLabel = getComputedStyle(document.documentElement).getPropertyValue("--color-label").trim();
+        const fontFamily = getComputedStyle(document.documentElement).getPropertyValue("--font-family").trim();
+        const defaultOption = {
+            chart: {
+                toolbar: { show: false, },
+                selection: { enabled: false, },
+                zoom: { enabled: false, },
+                width: "100%",
+                height: 100,
+                offsetY: 0,
+            },
+            dataLabels: { enabled: false, },
+            legend: { show: false, },
+            states: {
+                hover: {
+                    filter: { type: "none", },
+                },
+            },
+        };
+
+        var barOptions = {
+            ...defaultOptions,
+            chart: {
+                ...defaultOptions.chart,
+                type: "area",
+            },
+            tooltip: {
+                enabled: true,
+                fillSeriesColor: false,
+                style: { fontFamily: fontFamily, },
+                y: {
+                    formatter: (value) => {
+                        return `${value}`;
+                    },
+                },
+            },
+            series: [
+                {
+                    name: "This Year",
+                    data: [0, 37, 15, 55, 13, 43, 0],
+                },
+            ],
+            colors: [colorPrimary],
+            fill: {
+                type: "gradient",
+                gradient: {
+                    type: "vertical",
+                    opacityFrom: 1,
+                    opacityTo: 0,
+                    stops: [0, 100],
+                    colorStops: [
+                        [
+                            {
+                                offset: 0,
+                                color: "#ffffff",
+                                opacity: 0.2,
+                            },
+                            {
+                                offset: 150,
+                                color: "#ffffff",
+                                opacity: 0,
+                            },
+                        ],
+                    ],
+                },
+            },
+            stroke: { colors: [colorPrimary], lineCap: "round" },
+            grid: {
+                borderColor: "rgba(0, 0, 0, 0)",
+                padding: { left: 10, right: 0, top: -16, bottom: -8 },
+            },
+            makers: { strokeColors: colorPrimary, },
+            yaxis: { show: false, },
+            xaxis: {
+                labels: {
+                    floatting: true,
+                    show: true,
+                    style: {
+                        fontFamily: fontFamily,
+                        colors: colorLabel,
+                    },
+                },
+                axisBorder: { show: false, },
+                axisTicks: { show: false, },
+                crosshairs: { show: false, },
+                categories: ["Jan", "..."],
+            },
+        };
+
+        var chart = new ApexCharts(document.querySelector("#area-chart"), barOptions);
+        chart.render();
+    </script>
+</body>
+
+</html>

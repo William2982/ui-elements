@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f6f7fb;
+        }
+
+        ::selection {
+            color: #fff;
+            background-color: #000;
+        }
+
+        .container {
+            padding: 2rem 7rem;
+            border-radius: 14px;
+            background: #fff;
+        }
+
+        .result_images {
+            display: flex;
+            column-gap: 7rem;
+        }
+
+        .container.start .user_result {
+            transform-origin: left;
+            animation: userShake 0.7s ease;
+        }
+
+        @keyframes userShake {
+            50% {
+                transform: rotate(10deg);
+            }
+        }
+
+        .container.start .cpu_result {
+            transform-origin: right;
+            animation: cpuShake 0.7s ease;
+        }
+
+        @keyframes cpuShake {
+            50% {
+                transform: rotate(-10deg);
+            }
+        }
+
+        .result_images img {
+            width: 100px;
+        }
+
+        .user_result img {
+            transform: rotate(90deg);
+        }
+
+        .cpu_result img {
+            transform: rotate(-90deg) rotateY(180deg);
+        }
+
+        .result {
+            text-align: center;
+            font-size: 2rem;
+            color: #de0d64;
+            margin-top: 1.5rem;
+        }
+
+        .option_image img {
+            width: 50px;
+        }
+
+        .option_images {
+            display: flex;
+            align-items: center;
+            margin-top: 2.5rem;
+            justify-content: space-between;
+        }
+
+        .container.start .option_images {
+            pointer-events: none;
+        }
+
+        .option_image {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0.5;
+            cursor: pointer;
+        }
+
+        .option_image:hover {
+            opacity: 1;
+        }
+
+        .option_image.active {
+            opacity: 1;
+        }
+
+        .option_image img {
+            pointer-events: none;
+        }
+
+        .option_image p {
+            color: #3477eb;
+            font-size: 1.235rem;
+            margin-top: 1rem;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="container">
+        <div class="result_field">
+            <div class="result_images">
+                <span class="user_result">
+                    <img src="hand.png" alt="user hand">
+                </span>
+                <span class="cpu_result">
+                    <img src="hand.png" alt="cpu hand">
+                </span>
+            </div>
+            <div class="result">¡¡Let's Play!!</div>
+        </div>
+
+        <div class="option_images">
+            <span class="option_image">
+                <img src="rock.png" alt="rock">
+                <p>Rock</p>
+            </span>
+            <span class="option_image">
+                <img src="paper.png" alt="paper">
+                <p>Paper</p>
+            </span>
+            <span class="option_image">
+                <img src="scissors.png" alt="scissors">
+                <p>Scissors</p>
+            </span>
+        </div>
+    </section>
+
+    <script>
+        const gameContainer = document.querySelector('.container');
+        const userResult = document.querySelector('.user_result img');
+        const cpuResult = document.querySelector('.cpu_result img');
+        const result = document.querySelector('.result');
+        const optionImages = document.querySelectorAll('.option_image');
+
+        optionImages.forEach((image, index) => {
+            image.addEventListener('click', (e) => {
+                image.classList.add('active');
+
+                userResult.src = cpuResult.src = 'hand.png';
+                result.textContent = 'Wait...';
+
+                optionImages.forEach((image2, index2) => {
+                    index !== index2 && image2.classList.remove('active');
+                });
+
+                gameContainer.classList.add('start');
+
+                let time = setTimeout(() => {
+                    gameContainer.classList.remove('start');
+                    let imageSrc = e.target.querySelector('img').src;
+                    userResult.src = imageSrc;
+                    let randomNumber = Math.floor(Math.random() * 3);
+
+                    let cpuImages = ['rock.png', 'paper.png', 'scissors.png'];
+
+                    cpuResult.src = cpuImages[randomNumber];
+
+                    let cpuValue = ['R', 'P', 'S'][randomNumber];
+                    let userValue = ['R', 'P', 'S'][index];
+
+                    let outcomes = {
+                        RR: 'Draw',
+                        RP: 'Cpu',
+                        RS: 'User',
+                        PP: 'Draw',
+                        PR: 'User',
+                        PS: 'Cpu',
+                        SS: 'Draw',
+                        SR: 'Cpu',
+                        SP: 'User'
+                    };
+
+                    let outComeValue = outcomes[userValue + cpuValue];
+
+                    result.textContent = userValue == cpuValue ? 'Match Draw' : `¡¡${outComeValue} Won!!`;
+                }, 2500);
+            });
+        });
+    </script>
+</body>
+
+</html>

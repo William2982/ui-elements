@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Diferencia de Tiempo</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/i18n/jquery.datetimepicker.es.js"></script>
+</head>
+
+<body>
+    <h1>Calculadora de Diferencia de Tiempo</h1>
+    <label for="">Fecha y Hora de Inicio:</label>
+    <input type="text" id="fechaHoraInicio" class="dateTimePicker" onchange="calcular()" oninput="calcular()"><br>
+    <label for="">Fecha y Hora Fin:</label>
+    <input type="text" id="fechaHoraFin" class="dateTimePicker" onchange="calcular()" oninput="calcular()"><br>
+
+    <h2>Días:</h2>
+    <textarea id="txtDias" rows="4" cols="50" readonly></textarea>
+    <h2>Horas:</h2>
+    <textarea id="txtHoras" rows="2" cols="30" readonly></textarea>
+</body>
+
+</html>
+
+<script>
+    function calcular() {
+        var fechaInicio = new Date(document.getElementById('fechaHoraInicio').value);
+        var fechaFin = new Date(document.getElementById('fechaHoraFin').value);
+        var fechaInicioValue = document.getElementById('fechaHoraInicio').value;
+        var fechaFinValue = document.getElementById('fechaHoraFin').value;
+        var txtDias = document.getElementById('txtDias');
+        var txtHoras = document.getElementById('txtHoras');
+        var diff = fechaFin - fechaInicio;
+        var dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+        var horas = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var horasTotales = dias * 24 + horas;
+        var minutos = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        //(1000*60*60*24) --> milisegundos -> segundos -> minutos -> horas -> días
+
+        if (fechaInicio != '' && fechaFin != '') {
+            if (fechaInicioValue >= fechaFinValue) {
+                txtDias.value = '';
+                txtHoras.value = '';
+                return;
+            } else {
+                txtDias.value = `Días: ${dias}\nHoras: ${horas}\nMinutos: ${minutos}`;
+                txtHoras.value = `Horas Totales: ${horasTotales}h ${minutos}min`;
+            }
+        }
+    }
+
+    //DateTimePicker
+    $(document).ready(function () {
+        $.datetimepicker.setLocale('es');
+        $(".dateTimePicker").datetimepicker({
+            format: 'Y-m-d H:i',
+            step: 15
+        });
+    });
+</script>

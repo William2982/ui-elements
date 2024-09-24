@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fila de Tabla en Alert</title>
+</head>
+
+<body>
+    <div style="text-align:center;">
+        <table id="tabla">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>valor 1</th>
+                    <th>valor 2</th>
+                    <th>valor 3</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="radio" name="radio" class="checkbox"></td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                </tr>
+                <tr>
+                    <td><input type="radio" name="radio" class="checkbox"></td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>6</td>
+                </tr>
+                <tr>
+                    <td><input type="radio" name="radio" class="checkbox"></td>
+                    <td>7</td>
+                    <td>8</td>
+                    <td>9</td>
+                </tr>
+            </tbody>
+        </table>
+        <div style="padding-bottom:2%;"></div>
+        <button id="boton" onclick="mostrarDatos()">Mostrar valores</button>
+    </div>
+</body>
+
+</html>
+
+<script>
+    function mostrarDatos() {
+        var datos = document.querySelectorAll('#tabla .checkbox');
+        datos.forEach(function (checkbox) {
+            if (checkbox.checked) {
+                var fila = checkbox.parentNode.parentNode;
+                var valores = fila.querySelectorAll('td');
+                var thead = document.querySelectorAll('#tabla th');
+                var texto = '';
+                valores.forEach(function (valor, index) {
+                    texto += thead[index].textContent + ': ' + valor.textContent + '\n';
+                });
+                alert(texto);
+            }
+        });
+    }
+</script>

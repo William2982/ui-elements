@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .content {
+            height: 200vh;
+            width: 100%;
+        }
+
+        .container h1 {
+            width: 100%;
+            text-align: center;
+            letter-spacing: 0;
+            opacity: 100%;
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translate(-50%);
+            transition: 0.8s;
+            user-select: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Titulo h1</h1>
+        <div class="content"></div>
+    </div>
+
+    <script>
+        const titulo = document.querySelector('.container h1');
+        let lastScrollTop = 0;
+        window.addEventListener('scroll', function () {
+            let currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (currentScrollTop > lastScrollTop) {
+                console.log('Down');
+                titulo.style.letterSpacing = '50px';
+                titulo.style.opacity = '20%';
+                titulo.style.top = '0';
+            } else {
+                console.log('Up');
+                titulo.style.letterSpacing = '0px';
+                titulo.style.opacity = '100%';
+                titulo.style.top = '10%';
+            }
+            lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop; // Para evitar valores negativos
+        }, false);
+    </script>
+</body>
+
+</html>

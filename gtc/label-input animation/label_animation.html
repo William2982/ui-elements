@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input-Label animation</title>
+    <style>
+        .form-item {
+            position: relative;
+            margin-bottom: 15px;
+        }
+
+        .form-item input {
+            display: block;
+            width: 400px;
+            height: 40px;
+            padding: 0 15px;
+            background: transparent;
+            border: 1px solid #ccc;
+            transition: all .5s ease;
+        }
+
+        .form-item input:focus {
+            border-radius: 10px;
+            border-color: #051637;
+        }
+
+        .form-item label {
+            top: 13px;
+            left: 10px;
+            z-index: 2;
+            cursor: text;
+            color: #999;
+            padding: 0 10px;
+            font-weight: bold;
+            position: absolute;
+            background: #fff;
+            transition: all .3s ease;
+        }
+
+        .form-item input:focus+label,
+        .form-item input:valid+label {
+            top: -10px;
+            border-radius: 10px;
+            border: 1px solid #999;
+        }
+
+        .form-item input:focus+label {
+            color: black;
+            border-radius: 10px;
+            border: 1px solid #051637;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-item">
+        <input type="text" name="" id="usuario" required>
+        <label for="usuario">Usuario</label>
+    </div>
+    <div class="form-item">
+        <input type="password" name="" id="contraseña" required>
+        <label for="contraseña">Contraseña</label>
+    </div>
+</body>
+
+</html>

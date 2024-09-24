@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input Types</title>
+    <style>
+        div {
+            user-select: none;
+            text-align: center;
+            margin: 50px 0;
+        }
+
+        section {
+            padding: 5px;
+            border-radius: 30px;
+            background-color: #962727;
+        }
+
+        select {
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        h1 {
+            margin: 5px;
+            font-size: 35px;
+            color: #f0f8ff;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <div>
+            <select name="" id="txt">
+                <option value="">--Seleccionar--</option>
+                <option value="button">button</option>
+                <option value="color">color</option>
+                <option value="checkbox">checkbox</option>
+                <option value="number">number</option>
+                <option value="radio">radio</option>
+                <option value="submit">submit</option>
+                <option value="text">text</option>
+            </select>
+        </div>
+
+        <div>
+            <input type="text" id="txt2">
+            <h1 id="h1"></h1>
+        </div>
+    </section>
+
+    <script>
+        const txt = document.querySelector("#txt");
+        const txt2 = document.querySelector("#txt2");
+        const h1 = document.querySelector("#h1");
+
+        h1.innerHTML = txt2.type;
+        txt.addEventListener("change", () => {
+            txt2.type = `${txt.value}`;
+            h1.innerHTML = txt2.type;
+        });
+    </script>
+</body>
+
+</html>

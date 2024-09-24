@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        dialog {
+            position: fixed;
+            transform: translate(-50%, -50%);
+            left: 50%;
+            top: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="input-content">
+        <span id="cont">0/250</span>
+        <input type="text" id="txt" maxlength="250">
+    </div>
+
+    <div class="modal-content">
+        <button id="btnAbrir">MODAL</button>
+
+        <dialog id="modal">
+            <h1>Modal</h1>
+            <button id="btnCerrar">Cerrar</button>
+        </dialog>
+    </div>
+</body>
+
+</html>
+
+<script>
+    const txt = document.getElementById("txt");
+    const cont = document.getElementById("cont");
+
+    const modal = document.getElementById("modal");
+    const btnAbrir = document.getElementById("btnAbrir");
+    const btnCerrar = document.getElementById("btnCerrar");
+
+    txt.addEventListener("input", () => {
+        let num = txt.value.length;
+        cont.textContent = `${num}/250`;
+    });
+
+    btnAbrir.addEventListener("click", () => {
+        modal.showModal();
+    });
+    btnCerrar.addEventListener("click", () => {
+        modal.close();
+    });
+
+    // Cerrar modal cuando se hace clic fuera de su contenido
+    const modales = document.querySelectorAll("dialog");
+    modales.forEach(element => {
+        element.addEventListener('click', (e) => {
+            const rect = element.getBoundingClientRect();
+            const isInDialog = (e.clientX >= rect.left && e.clientX <= rect.right &&
+                e.clientY >= rect.top && e.clientY <= rect.bottom);
+            if (!isInDialog) {
+                element.close();
+            }
+        });
+    });
+</script>

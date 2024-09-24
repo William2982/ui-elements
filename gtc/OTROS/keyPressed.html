@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Key Pressed</title>
+    <style>
+        h1 {
+            text-align: center;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 100px;
+            color: #561010;
+        }
+
+        .div {
+            background-color: #ab7575;
+            border-radius: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="div">
+        <h1 id="h1">Press Any Key</h1>
+    </div>
+
+    <script>
+        document.addEventListener('keydown', (ev) => {
+            console.log(ev);
+            document.querySelector('#h1').textContent = ev.key;
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <style>
+        body {
+            display: flex;
+            padding: 0 10px;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            user-select: none;
+        }
+
+        .wrapper {
+            height: 265px;
+            max-width: 410px;
+            background: linear-gradient(#00446d, #9ccce3);
+            border-radius: 25px;
+            padding: 20px 25px 0;
+            transition: height 0.2s ease;
+            box-shadow: 0 0px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .wrapper.active {
+            height: 530px;
+        }
+
+        header h1 {
+            font-size: 21px;
+            font-weight: 500;
+            color: #fff;
+        }
+
+        header p {
+            margin-top: 5px;
+            color: #9ccce3;
+            font-size: 16px;
+        }
+
+        .wrapper .form {
+            margin: 20px 0 25px;
+        }
+
+        .form :where(input, button) {
+            width: 100%;
+            height: 55px;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            transition: 0.1s ease;
+        }
+
+        .form input {
+            font-size: 18px;
+            border: 1px solid #aaa;
+            color: #fff;
+            background: linear-gradient(#4e595f, #142835);
+        }
+
+        .form input:focus {
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.13);
+        }
+
+        .form input::placeholder {
+            color: #999;
+        }
+
+        .form button {
+            color: #fff;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 17px;
+            background: #444;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .form button:hover {
+            background: #333;
+        }
+
+        .form button:active {
+            transform: scale(0.95);
+        }
+
+        .qr-code {
+            opacity: 0;
+            display: flex;
+            padding: 33px 0;
+            border-radius: 5px;
+            align-items: center;
+            pointer-events: none;
+            justify-content: center;
+            border: 1px solid #ccc;
+        }
+
+        .wrapper.active .qr-code {
+            opacity: 1;
+            pointer-events: auto;
+            transition: opacity 0.5s 0.05s ease;
+        }
+
+        .qr-code img {
+            width: 170px;
+        }
+
+        @media (max-width: 430px) {
+            .wrapper {
+                height: 255px;
+                padding: 16px 20px;
+            }
+
+            .wrapper.active {
+                height: 510px;
+            }
+
+            header p {
+                color: #696969;
+            }
+
+            .form :where(input, button) {
+                height: 52px;
+            }
+
+            .qr-code img {
+                width: 160px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+            <h1>QR Code Generator</h1>
+            <p>¡¡Paste or write your URL to generate a QR Code!!</p>
+        </header>
+        <div class="form">
+            <input type="text" spellcheck="false" placeholder="URL">
+            <button>Generate</button>
+        </div>
+        <div class="qr-code">
+            <img src="" alt=" ">
+        </div>
+    </div>
+
+    <script>
+        const wrapper = document.querySelector('.wrapper');
+        const qrinput = wrapper.querySelector('.form input');
+        const generateBtn = wrapper.querySelector('.form button');
+        const qrImg = wrapper.querySelector('.qr-code img');
+        let preValue;
+
+        qrinput.addEventListener('input', () => {
+            let qrValue = qrinput.value.trim();
+            if (!qrValue || preValue === qrValue) return;
+            preValue = qrValue;
+            generateBtn.innerText = 'Generating QR Code...';
+            qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${qrValue}`;
+            qrImg.addEventListener('load', () => {
+                wrapper.classList.add('active');
+                generateBtn.innerText = 'Generate';
+            });
+        });
+
+        qrinput.addEventListener('keyup', () => {
+            if (!qrinput.value.trim()) {
+                wrapper.classList.remove('active');
+                preValue = '';
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Select with APIs</title>
+</head>
+
+<body>
+    <form>
+        <label for="firstSelect">Choose a category:</label>
+        <select id="firstSelect">
+            <option value="">--Select a category--</option>
+        </select>
+
+        <label for="secondSelect">Choose an item:</label>
+        <select id="secondSelect">
+            <option value="">--Select an item--</option>
+        </select>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const firstSelect = document.getElementById('firstSelect');
+            const secondSelect = document.getElementById('secondSelect');
+
+            // Options del primer Select
+            fetch('https://fakestoreapi.com/products/categories')
+                .then(response => response.json())
+                .then(categories => {
+                    categories.forEach(category => {
+                        firstSelect.add(new Option(category, category));
+                    });
+                })
+
+            // Options del segundo Select
+            firstSelect.addEventListener('change', () => {
+                secondSelect.value = '';
+                secondSelect.innerHTML = '<option value="">--Select an item--</option>';
+                if (firstSelect.value) {
+                    fetch(`https://fakestoreapi.com/products/category/${firstSelect.value}`)
+                        .then(response => response.json())
+                        .then(items => {
+                            items.forEach(item => {
+                                secondSelect.add(new Option(item.title, item.id));
+                            });
+                        })
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

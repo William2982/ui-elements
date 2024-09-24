@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla con DataTables y Cálculos</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+</head>
+
+<body>
+
+    <table id="miTabla" class="display">
+        <thead>
+            <tr>
+                <th>DATOS</th>
+                <th>Edad</th>
+                <th>Peso</th>
+                <th>Altura</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <br>
+
+    <table id="segundaTabla" class="display">
+        <thead>
+            <tr>
+                <th>Rango</th>
+                <th>Rango de Edades</th>
+                <th>Rango de Pesos</th>
+                <th>Rango de Alturas</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <button onclick="buscar()">Buscar</button>
+</body>
+
+</html>
+
+<script>
+    $(document).ready(function () {
+        $('#miTabla').DataTable();
+        $('#segundaTabla').DataTable();
+    });
+
+    function buscar() {
+        primerTabla();
+        segundaTabla();
+    }
+
+    function primerTabla() {
+        const tabla = $('#miTabla').DataTable();
+        var datosPrimeraTabla = [
+            ["DATOS", 65, 70, 160],
+            ["DATOS", 80, 85, 175],
+            ["DATOS", 110, 95, 180],
+            ["DATOS", 130, 75, 155]
+        ];
+        for (var i = 0; i < datosPrimeraTabla.length; i++) {
+            tabla.row.add(datosPrimeraTabla[i]).draw();
+        }
+    }
+
+    function segundaTabla() {
+        const tabla = $('#miTabla').DataTable();
+        const segundaTabla = $('#segundaTabla').DataTable();
+
+        var numColumnas = tabla.columns().header().length;
+        var datosSegundaTabla = [];
+        var rangos = ["0-50", "50-75", "75-99", "99-140", "Mayor a 140"];
+
+        for (var i = 0; i < rangos.length; i++) {
+            var contadores = Array(numColumnas - 1).fill(0);
+            for (var j = 1; j < numColumnas; j++) {
+                var datosColumna = tabla.column(j).data();
+                datosColumna.each(function (valor, index) {
+                    var rango = getRango(valor);
+                    if (rango === rangos[i]) {
+                        contadores[j - 1]++;
+                    }
+                });
+            }
+            datosSegundaTabla.push([rangos[i]].concat(contadores));
+        }
+        segundaTabla.clear().rows.add(datosSegundaTabla).draw();
+    }
+
+    function getRango(valor) {
+        if (valor >= 0 && valor <= 50) {
+            return "0-50";
+        } else if (valor > 50 && valor <= 75) {
+            return "50-75";
+        } else if (valor > 75 && valor <= 99) {
+            return "75-99";
+        } else if (valor > 99 && valor <= 140) {
+            return "99-140";
+        } else if (valor > 140) {
+            return "Mayor a 140";
+        }
+    }
+</script>

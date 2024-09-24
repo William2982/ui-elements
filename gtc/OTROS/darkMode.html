@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modo Oscuro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            transition: background-color 0.3s ease;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            color: #333;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode {
+            background-color: #333;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Modo Oscuro</h1>
+        <button id="modoOscuroBtn">Cambiar a Modo Oscuro</button>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modoOscuroBtn = document.getElementById('modoOscuroBtn');
+            const body = document.body;
+
+            // Verifica si el modo oscuro está activo en localStorage
+            if (localStorage.getItem('modoOscuro') === 'activado') {
+                body.classList.add('dark-mode');
+                modoOscuroBtn.textContent = 'Cambiar a Modo Claro';
+            }
+
+            modoOscuroBtn.addEventListener('click', function () {
+                // Alternar la clase y guardar el estado en localStorage
+                body.classList.toggle('dark-mode');
+                if (body.classList.contains('dark-mode')) {
+                    localStorage.setItem('modoOscuro', 'activado');
+                    modoOscuroBtn.textContent = 'Cambiar a Modo Claro';
+                } else {
+                    localStorage.setItem('modoOscuro', 'desactivado');
+                    modoOscuroBtn.textContent = 'Cambiar a Modo Oscuro';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

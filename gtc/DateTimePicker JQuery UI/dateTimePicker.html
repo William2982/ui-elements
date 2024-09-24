@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>DatePicker con TimePicker</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/i18n/jquery.datetimepicker.es.js"></script>
+</head>
+
+<body>
+    <label for="datepicker">Fecha y Hora:</label>
+    <input type="text" id="datepicker">
+    <button onclick="enviar()">Enviar</button>
+</body>
+
+</html>
+
+<script>
+    function enviar() {
+        var datetime = document.getElementById('datepicker').value;
+        alert('Fecha y Hora:\n' + datetime);
+    }
+
+    $(document).ready(function () {
+        $.datetimepicker.setLocale('es');
+        $("#datepicker").datetimepicker({
+            format: 'Y-m-d H:i',
+            step: 15
+        });
+    });
+</script>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="direccion-mac" maxlength="17" onkeydown="a()">
+</body>
+
+</html>
+
+<script>
+    function a() {
+        var inputMac = document.getElementById('direccion-mac');
+        let valor = inputMac.value;
+        valor = valor.replace(/[^0-9A-Fa-f]/g, '');
+        valor = valor.toUpperCase();
+        valor = valor.replace(/([0-9A-Fa-f]{2})/g, '$1:');
+        if (valor.slice(-1) === ':') {
+            valor = valor.slice(0, -1);
+        }
+        inputMac.value = valor;
+    }
+</script>

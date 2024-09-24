@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validar Palabras</title>
+</head>
+
+<body>
+    <div style="text-align:center;">
+        <label for="">Text Area</label><br>
+        <textarea name="" id="txtarea" cols="80" rows="6" onkeyup="pressSpace()"></textarea>
+    </div>
+</body>
+
+</html>
+
+<script>
+    //Restringir palabras.
+    function restPalabras() {
+        let palabras = ["insert", "into", "select", "or", "xor", "call", "join", "delete", "drop", "union", "table", "list", "not", "in"];
+        function checkText(text) {
+            for (let i = 0; i < palabras.length; i++) {
+                let regex = new RegExp(palabras[i]);
+                if (text.match(regex)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        let txtarea = document.getElementById('txtarea');
+        if (checkText(txtarea.value)) {
+            alert("Palabra no permitida.");
+            txtarea.value = "";
+        }
+    }
+    //Activar funcion al presionar tecla especifica (espacio).
+    function pressSpace() {
+        tecla_space = event.keyCode;
+        if (tecla_space == 32) {
+            restPalabras();
+        }
+    }
+</script>

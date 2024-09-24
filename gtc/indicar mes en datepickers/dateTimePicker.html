@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DateTimePicker con Combobox</title>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/i18n/jquery.datetimepicker.es.js"></script>
+</head>
+
+<body>
+    <label for="">Selecciona un mes:</label>
+    <select id="selectMonth">
+        <option value="">--Seleccionar--</option>
+        <option value="01">Enero</option>
+        <option value="02">Febrero</option>
+        <option value="03">Marzo</option>
+        <option value="04">Abril</option>
+        <option value="05">Mayo</option>
+        <option value="06">Junio</option>
+        <option value="07">Julio</option>
+        <option value="08">Agosto</option>
+        <option value="09">Septiembre</option>
+        <option value="10">Octubre</option>
+        <option value="11">Noviembre</option>
+        <option value="12">Diciembre</option>
+    </select>
+    <input type="text" class="dateTimePicker1">
+    <input type="text" class="dateTimePicker2">
+</body>
+
+</html>
+
+<script>
+    $(document).ready(function () {
+        $.datetimepicker.setLocale('es');
+        $('.dateTimePicker1').datetimepicker({
+            format: 'Y-m-d H:i',
+            step: 15,
+        });
+        $('.dateTimePicker2').datetimepicker({
+            format: 'Y-m-d H:i',
+            step: 15,
+        });
+
+        $('#selectMonth').on('change', function () {
+            const selectedMonth = $(this).val();
+            const currentDate = new Date();
+            currentDate.setMonth(selectedMonth - 1);
+            const firstDay = new Date(currentDate.getFullYear(), selectedMonth - 1, 1);
+            const lastDay = new Date(currentDate.getFullYear(), selectedMonth, 0);
+            const formattedFirstDay = firstDay.toISOString().slice(0, 10) + ' 00:00';
+            const formattedLastDay = lastDay.toISOString().slice(0, 10) + ' 23:59';
+            $('.dateTimePicker1').val(formattedFirstDay);
+            $('.dateTimePicker2').val(formattedLastDay);
+        });
+    });
+</script>

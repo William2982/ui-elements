@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Bar Responsive</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            background-color: #4070f4;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            height: 100vh;
+        }
+
+        .input-box {
+            background-color: #fff;
+            position: relative;
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            border-radius: 6px;
+            max-width: 60px;
+            margin: 0 30px;
+            height: 55px;
+            width: 100%;
+        }
+
+        .input-box.open {
+            max-width: 350px;
+        }
+
+        .input-box input {
+            position: relative;
+            color: #333;
+            outline: none;
+            border: none;
+            border-radius: 6px;
+            font-weight: 400;
+            padding: 0 15px;
+            font-size: 16px;
+            height: 100%;
+            width: 100%;
+        }
+
+        .input-box.open input {
+            padding: 0 15px 0 65px;
+        }
+
+        .input-box .search {
+            background-color: #fff;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            color: #4070f4;
+            cursor: pointer;
+            display: flex;
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            border-radius: 6px;
+            font-size: 30px;
+            height: 100%;
+            width: 60px;
+            transform: rotate(90deg);
+            left: 0;
+            top: 0;
+        }
+
+        .input-box.open .search {
+            transform: rotate(0deg);
+        }
+
+        .input-box .close {
+            pointer-events: none;
+            position: absolute;
+            cursor: pointer;
+            color: #fff;
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transform: translateY(-50%);
+            font-size: 30px;
+            padding: 5px;
+            right: -40px;
+            opacity: 0;
+            top: 50%;
+        }
+
+        .input-box.open .close {
+            transform: translateY(-50%) rotate(360deg);
+            pointer-events: auto;
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="" method="get" enctype="multipart/form-data">
+        <div class="input-box">
+            <input type="text" name="search" id="search" placeholder="Buscar...">
+            <span class="search">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                        d="m19.6 21l-6.3-6.3q-.75.6-1.725.95T9.5 16q-2.725 0-4.612-1.888T3 9.5t1.888-4.612T9.5 3t4.613 1.888T16 9.5q0 1.1-.35 2.075T14.7 13.3l6.3 6.3zM9.5 14q1.875 0 3.188-1.312T14 9.5t-1.312-3.187T9.5 5T6.313 6.313T5 9.5t1.313 3.188T9.5 14" />
+                </svg>
+            </span>
+            <span class="close">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                    <path fill="currentColor"
+                        d="M18 20.196V3.804a1 1 0 0 0-1.53-.848L3.357 11.152a1 1 0 0 0 0 1.696l13.113 8.196a1 1 0 0 0 1.53-.848" />
+                </svg>
+            </span>
+        </div>
+    </form>
+
+    <script>
+        const inputBox = document.querySelector('.input-box');
+        const search = document.querySelector('.search');
+        const closeIcon = document.querySelector('.close');
+
+        search.addEventListener('click', () => {
+            inputBox.classList.add('open');
+        });
+        closeIcon.addEventListener('click', () => {
+            inputBox.classList.remove('open');
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retro Style Button</title>
+    <style>
+        .retro {
+            font-weight: 700;
+            text-transform: uppercase;
+
+            background-color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 0.25rem;
+            border: solid 0.125rem #121212;
+            box-shadow: 0.25rem 0.25rem #121212;
+
+            transition: transform 50ms, box-shadow 50ms;
+
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .retro:active {
+            transform: translate(0.125rem, 0.125rem);
+            box-shadow: 0.125rem 0.125rem #121212;
+        }
+    </style>
+</head>
+
+<body>
+    <button class="retro">CLICK!</button>
+</body>
+
+</html>

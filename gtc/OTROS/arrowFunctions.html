@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arrow Functions</title>
+    <style>
+        section {
+            text-align: center;
+            user-select: none;
+            background-color: brown;
+            border-radius: 30px;
+            padding: 20px;
+        }
+
+        textarea {
+            padding: 8px;
+            overflow: hidden;
+            width: 60%;
+            margin: 8px 0;
+            border-radius: 15px;
+            resize: none;
+        }
+
+        #contador {
+            color: #d6dbdf;
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 35px;
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <label for="" id="contador"></label>
+        <div>
+            <textarea name="" id="texto" cols="30" rows="10" placeholder="Write whatever you want..."></textarea><br>
+            <button id="btn">Show Lengths</button>
+        </div>
+    </section>
+
+    <script>
+        const textarea = document.querySelector("#texto");
+        const label = document.querySelector("#contador");
+        const btn = document.querySelector("#btn");
+
+        label.textContent = textarea.value.length;
+        textarea.addEventListener("input", () => {
+            label.textContent = textarea.value.length;
+        });
+        btn.addEventListener("click", () => {
+            alert(textarea.value.length);
+        });
+    </script>
+</body>
+
+</html>

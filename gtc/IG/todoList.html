@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TO DO APP</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            font-style: italic;
+            user-select: none;
+        }
+
+        .todo-app {
+            width: 90%;
+            padding: 20px 10px;
+            background-color: #0c4a6e;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            border-radius: 20px;
+        }
+
+        .todo-app h1 {
+            color: #fff;
+            padding-bottom: 20px;
+        }
+
+        .todo-app__input-form {
+            width: 80%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .todo-app__input-form input {
+            width: 100%;
+            padding: 10px 20px;
+            border: 20px solid #3b82f6;
+            border-radius: 10px;
+            outline: none;
+            font-size: 1.25rem;
+        }
+
+        .todo-app__list {
+            width: 80%;
+            margin-top: 10px;
+            list-style: none;
+        }
+
+        .todo-app__list .task {
+            height: 2rem;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .todo-app__list .task .container {
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .todo-app__list .task .container .circle {
+            height: 80%;
+            aspect-ratio: 1;
+            border: none;
+            border-radius: 50%;
+            background-color: #4a7e9c;
+        }
+
+        .todo-app__list .task .close-icon {
+            color: #fff;
+            cursor: pointer;
+            z-index: 9;
+            font-size: 1.25rem;
+        }
+
+        .todo-app__list .task.completed .container .circle {
+            background-color: #10ce2c;
+        }
+
+        .todo-app__list .task.completed .container span {
+            text-decoration: line-through;
+        }
+
+        .todo-app__list .task.completed .close-icon {
+            text-decoration: line-through;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="todo-app">
+        <h1 class="todo-app__header">To Do List</h1>
+        <div class="todo-app__input-form">
+            <input type="text" name="" id="" placeholder="Write A New Task..." class="task-input">
+        </div>
+        <ul class="todo-app__list">
+            <li class="task">
+                <div class="container">
+                    <div class="circle"></div>
+                    <span class="task-name">Sample Task</span>
+                </div>
+                <i>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-trash-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                    </svg>
+                </i>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        // array to store tasks
+        let tasks = [];
+
+        // Verifica si hay datos en el Local Storage y los carga
+        const savedTasks = localStorage.getItem('tasks');
+        if (savedTasks) {
+            tasks = JSON.parse(savedTasks);
+        }
+
+        const addTask = () => {
+            const taskInput = document.querySelector('.task-input');
+            const taskName = taskInput.value;
+
+            // console.log("New task");
+
+            if (taskName.trim() !== '') {
+                const task = {
+                    id: Date.now(),
+                    name: taskName,
+                    completed: false
+                };
+
+                tasks.push(task);
+            }
+            // console.log(tasks);
+            renderTasks();
+            taskInput.value = '';
+
+        }
+        // add new task when Enter key pressed
+        const taskInput = document.querySelector('.task-input');
+        taskInput.addEventListener('keypress', function (event) {
+            if (event.key === 'Enter') {
+                addTask();
+            }
+        });
+        // function to delete a task
+        function deleteTask(id) {
+            tasks = tasks.filter(task => task.id !== id);
+            renderTasks();
+        }
+        // function to mark a task as completed
+        function markCompleted(id) {
+            tasks = tasks.map(task => {
+                if (task.id === id) {
+                    task.completed = !task.completed;
+                }
+                return task;
+            });
+            updateCompleteTask(id);
+        }
+        function updateCompleteTask(id) {
+            const taskElement = document.getElementById(id);
+            if (taskElement) {
+                const task = tasks.find(task => task.id === id);
+                if (task.completed) {
+                    taskElement.classList.add('completed');
+                } else {
+                    taskElement.classList.remove('completed');
+                }
+            }
+        }
+
+        // Función para guardar las tareas en el Local Storage
+        const saveTasksToStorage = () => {
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+
+        // function to render tasks on the page
+        const renderTasks = () => {
+            const taskList = document.querySelector('.todo-app__list');
+            taskList.innerHTML = '';
+
+            tasks.forEach(task => {
+                // create new list item
+                const listItem = document.createElement('li');
+                listItem.setAttribute('id', task.id);
+                listItem.classList.add('task', task.completed ? 'completed' : 'not');
+
+                // create main container
+                const taskContainer = document.createElement('div');
+                taskContainer.classList.add('container');
+                taskContainer.addEventListener('click', () => markCompleted(task.id));
+
+                // create circle icon
+                const taskCircle = document.createElement('div');
+                taskCircle.classList.add("circle");
+
+                // create task name
+                const taskName = document.createElement('span');
+                taskName.textContent = task.name;
+
+                // create task delete button
+                const deleteButton = document.createElement('i');
+                deleteButton.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0">
+                </svg>`;
+                deleteButton.addEventListener('click', () => deleteTask(task.id));
+
+                // add all elements into list
+                taskContainer.appendChild(taskCircle);
+                taskContainer.appendChild(taskName);
+
+                listItem.appendChild(taskContainer);
+                listItem.appendChild(deleteButton);
+
+                taskList.appendChild(listItem);
+            });
+
+            saveTasksToStorage();
+        }
+
+        renderTasks();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrolling</title>
+    <style>
+        :root {
+            --accent: #9fe870;
+            --accent-hover: #88e142;
+            --accent-active: #65cf21;
+            --control: #163300;
+            --secondary: #ecefeb;
+            --secondary-hover: #e0e4de;
+            --secondary-active: #6c6c6b;
+            --content-primary: #0e0f0c;
+        }
+
+        body {
+            padding: 16px;
+            display: flex;
+            height: 100vh;
+            min-width: 320px;
+            color: var(--content-primary);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .action-buttons {
+            position: relative;
+            display: inline-flex;
+            flex: 0 0 auto;
+            gap: 8px;
+            scroll-snap-align: start;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        .flag {
+            object-fit: cover;
+            width: 100%;
+            border-radius: 50%;
+            height: 48px;
+            min-width: 48px;
+            width: 48px;
+            border: 1px solid var(--secondary-hover);
+        }
+
+        .action-button {
+            color: #163300;
+            border-radius: 16px;
+            height: 32px;
+            gap: 4px;
+            cursor: pointer;
+            display: flex;
+            padding: 0 12px;
+            font-weight: 600;
+            transition: all 0.2s ease-in-out;
+            white-space: nowrap;
+            align-items: center;
+            text-decoration: none;
+            background-color: var(--secondary);
+        }
+
+        .action-button--primary:active {
+            background-color: var(--accent-active);
+        }
+
+        .action-button--horizontal-scroll {
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            width: 32px;
+            background-color: var(--accent);
+        }
+
+        .action-button:active {
+            background-color: var(--secondary-active);
+        }
+
+        @media screen and (max-width: 768px) {
+            .action-button--horizontal-scroll {
+                display: none;
+            }
+        }
+
+        .action-button--horizontal-scroll:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .action-button--horizontal-scroll:active {
+            background-color: var(--accent-active);
+        }
+
+        .action-button--horizontal-scroll:disabled {
+            cursor: not-allowed;
+            background-color: var(--secondary);
+        }
+
+        .action-button--horizontal-scroll:disabled:hover {
+            background-color: var(--secondary);
+        }
+
+        .action-button--horizontal-scroll:disabled:active {
+            background-color: var(--secondary);
+        }
+
+        #action-button--previous {
+            margin-left: auto;
+            /* transform: rotate(-90deg); */
+        }
+
+        #action-button--next {
+            /* transform: rotate(90deg); */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="action-buttons">
+            <a href="" class="action-button action-button--primary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-send-fill" viewBox="0 0 16 16">
+                    <path
+                        d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471z" />
+                </svg>
+                Send
+            </a>
+            <a aria-expanded="false" href="" class="action-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                    <path
+                        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
+                </svg>
+                Add Money
+            </a>
+            <a aria-expanded="false" href="" class="action-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-send-arrow-down-fill" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M15.854.146a.5.5 0 0 1 .11.54L13.026 8.03A4.5 4.5 0 0 0 8 12.5c0 .5 0 1.5-.773.36l-1.59-2.498L.644 7.184l-.002-.001-.41-.261a.5.5 0 0 1 .083-.886l.452-.18.001-.001L15.314.035a.5.5 0 0 1 .54.111M6.637 10.07l7.494-7.494.471-1.178-1.178.471L5.93 9.363l.338.215a.5.5 0 0 1 .154.154z" />
+                    <path fill-rule="evenodd"
+                        d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.354-1.646a.5.5 0 0 1-.722-.016l-1.149-1.25a.5.5 0 1 1 .737-.676l.28.305V11a.5.5 0 0 1 1 0v1.793l.396-.397a.5.5 0 0 1 .708.708z" />
+                </svg>
+                Request
+            </a>
+            <button type="button" disabled id="action-button--previous" class="action-button--horizontal-scroll">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-caret-left-fill" viewBox="0 0 16 16">
+                    <path
+                        d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
+                </svg>
+            </button>
+            <button type="button" disabled id="action-button--next" class="action-button--horizontal-scroll">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                    <path
+                        d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
+                </svg>
+            </button>
+        </div>
+        <div id="bank-accounts">
+            <a href="" class="bank-account">
+                <img class="flag" aria-hidden="true" src="" alt="UK">
+                <div>
+                    <h2 role="presentation">12150.25</h2>
+                    <div class="currency">British Pound</div>
+                </div>
+            </a>
+            <a href="" class="bank-account">
+                <img class="flag" aria-hidden="true" src="" style="object-position:-11px center;" alt="US">
+                <div>
+                    <h2 role="presentation">15150.25</h2>
+                    <div class="currency">US Dollar</div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const bankAccounts = document.getElementById('bank-accounts');
+        let isDown = false;
+        let startX;
+        let startY;
+        let scrollLeft;
+        let scrollTop;
+
+        bankAccounts.addEventListener('mousedown', (e) => {
+            isDown = true;
+            startX = e.pageX - bankAccounts.offsetLeft;
+            startY = e.pageY - bankAccounts.offsetTop;
+            scrollLeft = bankAccounts.scrollLeft;
+            scrollTop = bankAccounts.scrollTop;
+            bankAccounts.style.cursor = 'grabbing';
+        });
+
+        bankAccounts.addEventListener('mouseleave', () => {
+            isDown = false;
+            bankAccounts.style.cursor = 'grab';
+        });
+
+        bankAccounts.addEventListener('mouseup', () => {
+            isDown = false;
+            bankAccounts.style.cursor = 'grab';
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDown) { return; }
+            e.preventDefault();
+            const x = e.pageX - bankAccounts.offsetLeft;
+            const y = e.pageY - bankAccounts.offsetTop;
+            const walkX = (x - startX * 1) * 1;
+            const walkY = (y - startY * 1) * 1;
+            bankAccounts.scrollLeft = scrollLeft - walkX;
+            bankAccounts.scrollTop = scrollTop - walkY;
+        });
+
+        const scrollLeftButton = document.getElementById('action-button--previous');
+        const scrollRightButton = document.getElementById('action-button--next');
+
+        scrollLeftButton.addEventListener('click', () => {
+            bankAccounts.scrollBy({
+                top: 0,
+                left: -200,
+                behavior: 'smooth'
+            });
+        });
+        scrollRightButton.addEventListener('click', () => {
+            bankAccounts.scrollBy({
+                top: 0,
+                left: 200,
+                behavior: 'smooth'
+            });
+        });
+        bankAccounts.addEventListener('scroll', (e) => {
+            const position = bankAccounts.scrollLeft;
+            if (position === 0) {
+                scrollLeftButton.disabled = true;
+            } else {
+                scrollLeftButton.disabled = false;
+            }
+            if (Math.round(position) == bankAccounts.scrollWidth - bankAccounts.clientWidth) {
+                scrollRightButton.disabled = true;
+            } else {
+                scrollRightButton.disabled = false;
+            }
+        });
+    </script>
+</body>
+
+</html>

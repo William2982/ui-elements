@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Button</title>
+    <style>
+        .container {
+            background-color: #000;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            display: flex;
+            transform: translate(-50%, -50%);
+            border-radius: 15px;
+            padding: 80px 20px;
+            gap: 80px;
+            left: 50%;
+            top: 50%;
+        }
+
+        /* Background button */
+        :root {
+            --color: #00a8f9;
+            --time: 1s;
+        }
+
+        .btn-neon {
+            background-color: transparent;
+            text-decoration: none;
+            display: inline-block;
+            color: var(--color);
+            position: relative;
+            font-weight: bold;
+            overflow: hidden;
+            cursor: pointer;
+            border: none;
+            letter-spacing: 4px;
+            padding: 25px 30px;
+            font-size: 18px;
+            transition: 0.5s;
+        }
+
+        .btn-neon:hover {
+            box-shadow: 0 0 5px var(--color), 0 0 25px var(--color), 0 0 50px var(--color), 0 0 200px var(--color);
+            -webkit-box-reflect: below 1px linear-gradient(transparent, #0005);
+            background-color: var(--color);
+            color: #050801;
+        }
+
+        .btn-neon span {
+            position: absolute;
+            display: block;
+        }
+
+        /* Span animations */
+        .btn-neon span:nth-child(1) {
+            background: linear-gradient(90deg, transparent, var(--color));
+            animation: animate1 var(--time) infinite;
+            width: 100%;
+            height: 1px;
+            left: 0;
+            top: 0;
+        }
+
+        @keyframes animate1 {
+            0% {
+                left: -100%;
+            }
+
+            100% {
+                left: 100%;
+            }
+        }
+
+        .btn-neon span:nth-child(2) {
+            background: linear-gradient(180deg, transparent, var(--color));
+            animation: animate2 var(--time) infinite;
+            animation-delay: 0.25s;
+            height: 100%;
+            width: 1px;
+            top: -100%;
+            right: 0;
+        }
+
+        @keyframes animate2 {
+            0% {
+                top: -100%;
+            }
+
+            100% {
+                top: 100%;
+            }
+        }
+
+        .btn-neon span:nth-child(3) {
+            background: linear-gradient(270deg, transparent, var(--color));
+            animation: animate3 var(--time) infinite;
+            animation-delay: 0.50s;
+            right: -100%;
+            width: 100%;
+            height: 1px;
+            bottom: 0;
+        }
+
+        @keyframes animate3 {
+            0% {
+                right: -100%;
+            }
+
+            100% {
+                right: 100%;
+            }
+        }
+
+        .btn-neon span:nth-child(4) {
+            background: linear-gradient(360deg, transparent, var(--color));
+            animation: animate4 var(--time) infinite;
+            animation-delay: 0.75s;
+            bottom: -100%;
+            height: 100%;
+            width: 1px;
+            left: 0;
+        }
+
+        @keyframes animate4 {
+            0% {
+                bottom: -100%;
+            }
+
+            100% {
+                bottom: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <button class="btn-neon">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Button1
+        </button>
+        <button class="btn-neon">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Button2
+        </button>
+        <button class="btn-neon">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Button3
+        </button>
+    </div>
+</body>
+
+</html>

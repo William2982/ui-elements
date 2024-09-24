@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Llenar input con AJAX</title>
+</head>
+
+<body onload="a()">
+    <div style="text-align:center;">
+        <form>
+            <label for="">Nombre:</label>
+            <input type="text" name="" id="first_name" disabled><br><br>
+            <label for="">Apellido:</label>
+            <input type="text" name="" id="last_name" disabled><br><br>
+            <label for="">Email:</label>
+            <input type="text" name="" id="email" disabled><br><br>
+        </form>
+    </div>
+</body>
+
+</html>
+
+<script>
+    function a() {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', 'https://jsonplaceholder.typicode.com/users/1', true);
+        xhr.onload = function () {
+            if (this.status === 200) {
+                const datos = JSON.parse(this.responseText);
+                document.getElementById('first_name').value = datos.id;
+                document.getElementById('last_name').value = datos.name;
+                document.getElementById('email').value = datos.email;
+                //console.log(datos);
+            }
+        }
+        xhr.send();
+    }
+</script>

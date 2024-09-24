@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resta de hrs en inputs</title>
+    <script src="http://momentjs.com/downloads/moment.min.js"></script>
+</head>
+
+<body>
+    <div style="text-align:center;">
+        <input type="datetime-local" id="time1">
+        <input type="datetime-local" id="time2">
+        <input type="text" id="result" readonly>
+        <button id="calcular" onclick="restar()">calcular</button>
+    </div>
+</body>
+
+</html>
+
+<script>
+    function restar() {
+        var f1 = document.getElementById('time1').value;
+        var f2 = document.getElementById('time2').value;
+        var fecha1 = moment(document.getElementById('time1').value);
+        var fecha2 = moment(document.getElementById('time2').value);
+        var diff = fecha2 - fecha1;
+        var dias = diff / (1000 * 60 * 60 * 24);
+        var horas = diff / (1000 * 60 * 60);
+        var mins = diff / (1000 * 60);
+
+        if (f1 === '' || f2 === '') {
+            alert('Seleccionar una fecha de Evento y de Restablecimiento para continuar.');
+        } else {
+            if (fecha1 > fecha2) {
+                alert('La fecha de Restablecimiento debe ser mayor a la del Evento.');
+            } else {
+                // (1000*60*60*24) --> milisegundos -> segundos -> minutos -> horas -> días
+                alert('Dìas: ' + dias + '\n\nHoras: ' + horas + '\n\nMinutos: ' + mins);
+                //document.getElementById('result').value = dias;
+                //document.getElementById('result').value = horas;
+                document.getElementById('result').value = mins;
+            }
+        }
+    }
+
+</script>

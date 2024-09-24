@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla con DataTables</title>
+    <!-- Agrega las bibliotecas de jQuery y DataTables -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+</head>
+
+<body>
+
+    <!-- Crea una tabla básica con un ID específico -->
+    <table id="miTabla" class="display">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Usuario 1</td>
+                <td>usuario1@example.com</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Usuario 2</td>
+                <td>usuario2@example.com</td>
+            </tr>
+            <!-- Agrega más filas según sea necesario -->
+        </tbody>
+    </table>
+
+    <!-- Inicializa DataTables -->
+    <script>
+        $(document).ready(function () {
+            $('#miTabla').DataTable({
+                "columnDefs": [
+                    {
+                        "width": "30%",  // Ajusta la anchura de la primera columna según tus necesidades
+                        "targets": 0  // Índice de la primera columna (empezando desde 0)
+                    }
+                ]
+            });
+        });
+    </script>
+
+</body>
+
+</html>

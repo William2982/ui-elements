@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabs</title>
+    <style>
+        .tabs {
+            border: solid 2px #00446d;
+            background-color: #dbdfe8;
+            position: relative;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .tabs .tab button {
+            background-color: #00446d;
+            font-weight: bold;
+            color: #FFFFFF;
+            cursor: pointer;
+            border-radius: 15px 15px 0 0;
+            padding: 20px;
+            width: 100%;
+            height: 100%;
+        }
+
+        .tabs .tab-content {
+            background-color: #dbdfe8;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            position: absolute;
+            display: none;
+            height: auto;
+            border-radius: 0 0 15px 15px;
+            width: 100%;
+            left: 0;
+            top: 100%;
+        }
+
+        .tabs .tab-content.show-tab {
+            display: flex;
+        }
+
+        @media screen and (max-width:500px) {
+            .tabs {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="tabs">
+        <div class="tab">
+            <button type="button">tab1</button>
+            <div class="tab-content show-tab">
+                <p>Contenido de Tab1</p>
+            </div>
+        </div>
+        <div class="tab">
+            <button type="button">tab2</button>
+            <div class="tab-content">
+                <p>Contenido de Tab2</p>
+            </div>
+        </div>
+        <div class="tab">
+            <button type="button">tab3</button>
+            <div class="tab-content">
+                <p>Contenido de Tab3</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const tabContent = document.querySelectorAll('.tabs .tab-content');
+        const tabBtns = document.querySelectorAll('.tabs .tab button');
+
+        tabBtns.forEach((button, index) => {
+            button.addEventListener('click', () => {
+                tabContent.forEach(content => content.classList.remove('show-tab'));
+                tabContent[index].classList.add('show-tab');
+            });
+        });
+    </script>
+</body>
+
+</html>

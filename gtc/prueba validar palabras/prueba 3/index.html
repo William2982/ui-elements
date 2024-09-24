@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Borrar palabra restringida</title>
+</head>
+
+<body>
+    <div style="text-align:center;">
+        <input type="text" id="input-text" onkeyup="restPalabras(event)">
+    </div>
+</body>
+
+</html>
+
+<script>
+    function restPalabras(event) {
+        //if (event.keyCode === 32) {
+            var input = document.getElementById("input-text");
+            var valor = input.value;
+            var palabras = ["insert", "into", "select", "or", "xor", "call", "join", "delete", "drop", "union", "table", "list", "not", "in"];
+
+            for (let i = 0; i < palabras.length; i++) {
+                if (valor.indexOf(palabras[i]) !== -1) {
+                    valor = valor.replace(palabras[i], "");
+                    alert('Palabra restringida.');
+                }
+            }
+            input.value = valor;
+        //}
+    }
+</script>

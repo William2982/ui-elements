@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla con DataTables</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
+</head>
+
+<body>
+
+    <table id="miTabla" class="display">
+        <thead>
+            <tr>
+                <th>Columna 1</th>
+                <th>Columna 2</th>
+                <th>Columna 3</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>10</td>
+                <td>20</td>
+                <td>30</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>15</td>
+                <td>25</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>12</td>
+                <td>24</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <input type="text" id="sumaInput" readonly>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Inicializar la tabla DataTable
+            var table = $('#miTabla').DataTable();
+
+            // Obtener la suma de la columna 1
+            var suma = table
+                .column(3)
+                .data()
+                .reduce(function (a, b) {
+                    return parseFloat(a) + parseFloat(b);
+                }, 0);
+
+            // Mostrar la suma en el input
+            $('#sumaInput').val(suma);
+        });
+    </script>
+
+</body>
+
+</html>

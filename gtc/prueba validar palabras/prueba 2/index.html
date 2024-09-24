@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Borrar ultima palabra escrita</title>
+</head>
+
+<body>
+    <div style="text-align:center;">
+        <input type="text" id="myInput" onkeydown="checkEnter(event)">
+    </div>
+</body>
+
+</html>
+
+<script>
+    function checkEnter(event) {
+        if (event.keyCode === 32) {
+            const input = document.getElementById("myInput");
+            const words = input.value.trim().split(" ");
+            const lastWord = words[words.length - 1];
+            if (lastWord.length > 1) {
+                input.value = input.value.replace(new RegExp("\\b" + lastWord + "\\b"), "").trim();
+            }
+        }
+    }
+</script>

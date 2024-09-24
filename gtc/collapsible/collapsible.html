@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .collapsible-header {
+            background-color: #3498db;
+            color: white;
+            padding: 15px;
+            cursor: pointer;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+            padding: 15px;
+            background-color: #f1f1f1;
+            border-radius: 0 0 5px 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Encabezado del collapsible -->
+    <div class="collapsible-header" onclick="toggleCollapsible()">Mostrar Contenido ▼</div>
+
+    <!-- Contenido del collapsible (inicialmente oculto) -->
+    <div class="collapsible-content" id="collapsible-content">
+        <p>¡Bienvenido al contenido plegable! Puedes ocultarlo o mostrarlo haciendo clic en el encabezado de arriba.</p>
+    </div>
+
+    <script>
+        // Función para mostrar u ocultar el contenido del collapsible
+        function toggleCollapsible() {
+            var content = document.getElementById("collapsible-content");
+            var header = document.querySelector(".collapsible-header");
+            if (content.style.maxHeight === "0px") {
+                content.style.maxHeight = content.scrollHeight + "px";
+                header.innerHTML = "Ocultar Contenido ▲";
+            } else {
+                content.style.maxHeight = "0px";
+                header.innerHTML = "Mostrar Contenido ▼";
+            }
+        }
+    </script>
+
+</body>
+
+</html>

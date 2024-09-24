@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropdown Menu Bootstrap</title>
+    <link rel="stylesheet" href="https://ergservices.sytes.net:4430/includes/bootstrap/5/last/css/bootstrap.css">
+    <script src="https://ergservices.sytes.net:4430/includes/bootstrap/5/last/js/bootstrap.bundle.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="dropdown">
+                    <button class="bgbtnContent" type=" button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                            class="bi bi-arrow-down-circle-fill hoverBtn" viewBox="0 0 16 16">
+                            <path
+                                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z">
+                            </path>
+                        </svg>
+                        <label for="" class="titulo">Presionar el botón</label>
+                    </button>
+                    <ul class="dropdown-menu bgDroplist">
+                        <a><input type="checkbox" class="titulo">aaa</a>
+                        <a><input type="checkbox" class="titulo">aaa</a>
+                        <a><input type="checkbox" class="titulo">aaa</a>
+                        <a><input type="checkbox" class="titulo">aaa</a>
+                        <a><input type="checkbox" class="titulo">aaa</a>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="dropdown">
+                    <button class="bgbtnContent" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                            class="bi bi-arrow-down-circle-fill hoverBtn" viewBox="0 0 16 16">
+                            <path
+                                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z">
+                            </path>
+                        </svg>
+                        <label for="" class="titulo">Presionar el botón</label>
+                    </button>
+                    <ul class="dropdown-menu bgDroplist">
+                        <a><input type="checkbox" class="titulo">aaa</a>
+                        <a><input type="checkbox" class="titulo">aaa</a>
+                        <a><input type="checkbox" class="titulo">aaa</a>
+                        <a><input type="checkbox" class="titulo">aaa</a>
+                        <a><input type="checkbox" class="titulo">aaa</a>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="dropdown">
+                    <button class="bgbtnContent" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                            class="bi bi-arrow-down-circle-fill hoverBtn" viewBox="0 0 16 16">
+                            <path
+                                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z">
+                            </path>
+                        </svg>
+                        <label for="" class="titulo">Presionar el botón</label>
+                    </button>
+                    <ul class="dropdown-menu bgDroplist">
+                        <a><input type="checkbox" class="titulo">aaa</a>
+                        <a><input type="checkbox" class="titulo">aaa</a>
+                        <a><input type="checkbox" class="titulo">aaa</a>
+                        <a><input type="checkbox" class="titulo">aaa</a>
+                        <a><input type="checkbox" class="titulo">aaa</a>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<style>
+    .titulo {
+        margin: 5px;
+    }
+
+    button {
+        display: flex;
+        align-items: center;
+    }
+
+    .hoverBtn {
+        color: black;
+        cursor: pointer;
+    }
+
+    .hoverBtn:hover {
+        color: #078FD3;
+        cursor: pointer;
+    }
+
+    .hoverBtn:active {
+        color: #07d344;
+    }
+
+    .bgDroplist {
+        background-color: #f1f1f1;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    .bgDroplist a {
+        color: black;
+        padding: 3px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .bgbtnContent {
+        border-radius: 100%;
+        background-color: white;
+        border: none;
+    }
+</style>

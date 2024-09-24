@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <style>
+        .ui-datepicker-next {
+            display: none;
+        }
+
+        .ui-datepicker-prev {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <select id="monthSelect">
+        <option value="">--Seleccionar--</option>
+        <option value="01">Enero</option>
+        <option value="02">Febrero</option>
+        <option value="03">Marzo</option>
+        <option value="04">Abril</option>
+        <option value="05">Mayo</option>
+        <option value="06">Junio</option>
+        <option value="07">Julio</option>
+        <option value="08">Agosto</option>
+        <option value="09">Septiembre</option>
+        <option value="10">Octubre</option>
+        <option value="11">Noviembre</option>
+        <option value="12">Diciembre</option>
+    </select>
+
+    <input type="text" class="DatePicker1">
+
+    <input type="text" class="DatePicker2">
+
+    <script>
+        $(function () {
+            var datePicker1 = $(".DatePicker1").datepicker({
+                dateFormat: 'yy-mm-dd',
+                beforeShow: function (input, inst) {
+                    var selectedMonth = $("#monthSelect").val();
+                    var currentYear = new Date().getFullYear();
+                    inst.dpDiv.find('.ui-datepicker-month').val(parseInt(selectedMonth) - 1);
+                    inst.dpDiv.find('.ui-datepicker-year').val(currentYear);
+                }
+            });
+
+            var datePicker2 = $(".DatePicker2").datepicker({
+                dateFormat: 'yy-mm-dd',
+                beforeShow: function (input, inst) {
+                    var selectedMonth = $("#monthSelect").val();
+                    var currentYear = new Date().getFullYear();
+                    inst.dpDiv.find('.ui-datepicker-month').val(parseInt(selectedMonth) - 1);
+                    inst.dpDiv.find('.ui-datepicker-year').val(currentYear);
+                }
+            });
+
+            $("#monthSelect").change(function () {
+                var selectedMonth = $(this).val();
+                var currentYear = new Date().getFullYear();
+                var formattedMonth = new Date(currentYear, parseInt(selectedMonth) - 1, 1);
+                $(".DatePicker1").datepicker("setDate", formattedMonth);
+                $(".DatePicker2").datepicker("setDate", formattedMonth);
+            });
+        });
+    </script>
+</body>
+
+</html>

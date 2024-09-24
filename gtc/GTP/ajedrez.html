@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajedrez</title>
+    <style>
+        .chessboard {
+            display: grid;
+            grid-template-columns: repeat(8, 50px);
+            grid-template-rows: repeat(8, 50px);
+        }
+
+        .square {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+        }
+
+        .white {
+            background-color: #f0d9b5;
+        }
+
+        .black {
+            background-color: #b58863;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="chessboard" id="chessboard"></div>
+
+    <script>
+        const board = document.getElementById('chessboard');
+        let selectedPiece = null;
+
+        // Crear el tablero de ajedrez
+        for (let row = 0; row < 8; row++) {
+            for (let col = 0; col < 8; col++) {
+                const square = document.createElement('div');
+                square.classList.add('square');
+                if ((row + col) % 2 === 0) {
+                    square.classList.add('white');
+                } else {
+                    square.classList.add('black');
+                }
+                square.dataset.row = row;
+                square.dataset.col = col;
+                square.addEventListener('click', handleSquareClick);
+                board.appendChild(square);
+            }
+        }
+
+        // Definir las piezas de ajedrez
+        const pieces = {
+            'w_pawn': '♙',
+            'w_rook': '♖',
+            'w_knight': '♘',
+            'w_bishop': '♗',
+            'w_queen': '♕',
+            'w_king': '♔',
+            'b_pawn': '♟',
+            'b_rook': '♜',
+            'b_knight': '♞',
+            'b_bishop': '♝',
+            'b_queen': '♛',
+            'b_king': '♚'
+        };
+
+        // Colocar las piezas en el tablero
+        for (const piece in pieces) {
+            const color = piece.startsWith('w') ? 'white' : 'black';
+            const [row, col] = getPiecePosition(piece);
+            const square = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+            square.textContent = pieces[piece];
+            square.classList.add(color);
+        }
+
+        function getPiecePosition(piece) {
+            switch (piece) {
+                case 'w_pawn':
+                    return [6, 0];
+                case 'w_rook':
+                case 'w_knight':
+                case 'w_bishop':
+                case 'w_queen':
+                case 'w_king':
+                    return [7, pieces[piece] === '♖' ? 0 : 7];
+                case 'b_pawn':
+                    return [1, 0];
+                case 'b_rook':
+                case 'b_knight':
+                case 'b_bishop':
+                case 'b_queen':
+                case 'b_king':
+                    return [0, pieces[piece] === '♜' ? 0 : 7];
+                default:
+                    return [-1, -1];
+            }
+        }
+
+        function handleSquareClick(event) {
+            const clickedSquare = event.target;
+            const clickedRow = parseInt(clickedSquare.dataset.row);
+            const clickedCol = parseInt(clickedSquare.dataset.col);
+
+            if (selectedPiece) {
+                const [selectedRow, selectedCol] = selectedPiece;
+                const piece = board.querySelector(`[data-row="${selectedRow}"][data-col="${selectedCol}"]`);
+                const targetSquare = board.querySelector(`[data-row="${clickedRow}"][data-col="${clickedCol}"]`);
+
+                // Realizar el movimiento si es válido
+                if (isValidMove(selectedRow, selectedCol, clickedRow, clickedCol)) {
+                    targetSquare.textContent = piece.textContent;
+                    targetSquare.className = piece.className;
+                    piece.textContent = '';
+                    piece.className = 'square';
+                }
+
+                selectedPiece = null;
+            } else {
+                selectedPiece = [clickedRow, clickedCol];
+            }
+        }
+
+        function isValidMove(startRow, startCol, endRow, endCol) {
+            // Lógica de validación del movimiento de las piezas aquí
+            // En esta versión, se permite cualquier movimiento
+            return true;
+        }
+    </script>
+</body>
+
+</html>

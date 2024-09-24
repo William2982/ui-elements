@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla con DataTables</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+</head>
+
+<body>
+
+    <table id="miTabla">
+        <thead>
+            <tr>
+                <th>Datos</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Dato 1</td>
+            </tr>
+            <tr>
+                <td>Dato 2</td>
+            </tr>
+            <tr>
+                <td>Dato 3</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button onclick="showDatos()">Mostrar Datos</button>
+
+    <script>
+        $(document).ready(function () {
+            $('#miTabla').DataTable();
+        });
+        function showDatos() {
+            const tabla = $('#miTabla').DataTable();
+            var datosColumna = tabla.column(0).data().toArray();
+            alert(datosColumna.join(','));
+        }
+    </script>
+
+</body>
+
+</html>

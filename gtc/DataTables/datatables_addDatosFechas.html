@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date Table</title>
+    <!-- Include DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+</head>
+
+<body>
+    <input type="date" id="dateInput1">
+    <input type="date" id="dateInput2">
+    <button id="addDate">Add</button>
+
+    <table id="myTable">
+        <thead>
+            <tr>
+                <th>Date 1</th>
+                <th>Date 2</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <!-- Include jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Include DataTables JS -->
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var table = $("#myTable").DataTable();
+
+            $("#addDate").click(function () {
+                var date1 = $("#dateInput1").val();
+                var date2 = $("#dateInput2").val();
+
+                if (date1 && date2) {
+                    table.row.add([date1, date2]).draw();
+                    $("#dateInput1").val("");
+                    $("#dateInput2").val("");
+                }
+            });
+
+            // Initialize the inputs with the current date
+            $("#dateInput1").val(new Date().toISOString().slice(0, 10));
+            $("#dateInput2").val(new Date().toISOString().slice(0, 10));
+        });
+    </script>
+</body>
+
+</html>
