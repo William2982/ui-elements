@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+
+        footer {
+            background-color: #222;
+            color: white;
+            padding: 20px;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .footer-section {
+            flex-basis: 25%;
+            padding: 10px;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 10px;
+        }
+
+        .footer-section a {
+            display: block;
+            margin-bottom: 5px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 10px 0;
+            border-top: 1px solid #444;
+            margin-top: 20px;
+        }
+
+        input[type="email"] {
+            padding: 5px;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 5px 10px;
+            background-color: #555;
+            color: white;
+            border: none;
+        }
+
+        @media (max-width: 768px) {
+            .footer-section {
+                flex-basis: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <p>Dirección: Calle Ejemplo 123</p>
+                <p>Correo: info@tuempresa.com</p>
+                <p>Teléfono: +1 123 456 7890</p>
+            </div>
+            <div class="footer-section">
+                <h4>Redes Sociales</h4>
+                <a href="#">Facebook</a>
+                <a href="#">Twitter</a>
+                <a href="#">Instagram</a>
+            </div>
+            <div class="footer-section">
+                <h4>Enlaces Útiles</h4>
+                <a href="#">Sobre Nosotros</a>
+                <a href="#">Servicios</a>
+                <a href="#">Política de Privacidad</a>
+            </div>
+            <div class="footer-section">
+                <h4>Suscríbete</h4>
+                <input type="email" placeholder="Tu correo">
+                <button>Enviar</button>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 TuEmpresa. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+</body>
+
+</html>

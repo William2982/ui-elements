@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- CSS de Dropzone -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.css">
+    <!-- JS de Dropzone -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/dropzone.min.js"></script>
+</head>
+
+<body>
+    <div class="dropzone" id="miDropzone"></div>
+
+    <button id="btn-enviar">Enviar</button>
+
+    <script>
+        const btnEnviar = document.getElementById('btn-enviar');
+        const miDropzone = new Dropzone('#miDropzone', {
+            url: "upload.php",  // Ruta donde se enviarán los archivos
+            maxFiles: 1,  // Número máximo de archivos
+            maxFilesize: 5,  // Tamaño máximo en MB
+            acceptedFiles: "image/*", // Solo imágenes
+            addRemoveLinks: true,
+            dictRemoveFile: "Eliminar",
+            dictDefaultMessage: "SUBIR ARCHIVO AQUI",
+            init: function () {
+                this.on("addedfile", function (file) {
+                    // Si ya hay un archivo, eliminar el anterior
+                    if (this.files.length > 1) {
+                        this.removeFile(this.files[0]);
+                    }
+                });
+            }
+        });
+
+        btnEnviar.addEventListener('click', function () {
+            // console.log("Archivos a enviar:", miDropzone.getAcceptedFiles());
+            console.log("Nombre archivo:", miDropzone.getAcceptedFiles()[0].upload.filename);
+            // console.log("Base64 archivo:", miDropzone.getAcceptedFiles()[0].dataURL);
+        });
+    </script>
+</body>
+
+</html>

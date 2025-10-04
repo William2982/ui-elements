@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD</title>
+    <!-- FIREBASE -->
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+    <!-- FIRESTORE -->
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
+    <!-- STORAGE -->
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-storage-compat.js"></script>
+</head>
+
+<body>
+    <!-- FORESTORE -->
+    <h2>FIRESTORE DATABASE</h2>
+    <input type="text" name="first" id="first" placeholder="First">
+    <input type="text" name="last" id="last" placeholder="Last">
+    <input type="number" name="born" id="born" placeholder="Born">
+    <button id="btn-enviar" onclick="crearDoc()">Enviar</button>
+
+    <table id="tabla-datos">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First</th>
+                <th>Last</th>
+                <th>Born</th>
+                <th>Eliminar</th>
+                <th>Editar</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <!-- STORAGE -->
+    <h2>STORAGE</h2>
+    <input type="file" name="archivo" id="archivo">
+    <button onclick="crearStorage()">Subir archivo</button>
+    <div id="files-container"></div>
+    <table id="tabla-archivos">
+        <thead>
+            <tr>
+                <th>Archivo</th>
+                <th>Nombre</th>
+                <th>URL</th>
+                <th>Eliminar</th>
+                <th>Editar</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        
+        /* FIREBASE */
+        firebase.initializeApp({
+            apiKey: "AIzaSyBL4Lg6VmiWPaRBnbTdCbcAvS8dkNVVdSc",
+            authDomain: "prueba-e2e2c.firebaseapp.com",
+            projectId: "prueba-e2e2c",
+            storageBucket: "prueba-e2e2c.appspot.com",
+            messagingSenderId: "420823342232",
+            appId: "1:420823342232:web:e8c6d4e9d683eb8b1d04ed"
+        });
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+
+
+        /* FIRESTORE */
+        // CREATE
+        function crearDoc() {
+            // Variables de entrada
+            const first = document.querySelector('#first');
+            const last = document.querySelector('#last');
+            const born = document.querySelector('#born');
+            // Añadir datos
+            db.collection("users").add({
+                first: first.value,
+                last: last.value,
+                born: parseInt(born.value)
+            })
+                .then((docRef) => {
+                    console.log("Document written with ID: ", docRef.id);
+                    // Vaciar inputs
+                    first.value = '';
+                    last.value = '';
+                    born.value = '';
+                })
+                .catch((error) => {
+                    console.error("Error adding document: ", error);
+                });
+        }
+
+        // READ
+        function leerDoc() {
+            // Leer datos
+            db.collection("users").onSnapshot((querySnapshot) => {
+                // Variables de entrada
+                const tabla = document.querySelector('#tabla-datos tbody');
+                tabla.innerHTML = '';
+
+                querySnapshot.forEach((doc) => {
+                    // console.log(`${doc.id} => ${doc.data().first}`);
+
+                    // Mostrar datos en tabla
+                    tabla.innerHTML += `
+                    <tr>
+                        <td>${doc.id}</td>
+                        <td>${doc.data().first}</td>
+                        <td>${doc.data().last}</td>
+                        <td>${doc.data().born}</td>
+                        <td>
+                            <button onclick="borrarDoc('${doc.id}')">Borrar</button>
+                        </td>
+                        <td>
+                            <button onclick="editarDoc('${doc.id}','${doc.data().first}','${doc.data().last}','${doc.data().born}')">Editar</button>
+                        </td>
+                    </tr>
+                    `;
+
+                });
+            });
+        }
+        leerDoc();
+
+        // UPDATE
+        function editarDoc(idDoc, nombre, apellido, fecha) {
+            // Variables de entrada
+            const first = document.querySelector('#first');
+            const last = document.querySelector('#last');
+            const born = document.querySelector('#born');
+            first.value = nombre;
+            last.value = apellido;
+            born.value = fecha;
+            const btnEditar = document.querySelector('#btn-enviar');
+            btnEditar.innerHTML = 'Actualizar';
+
+            btnEditar.onclick = function () {
+                // Editar datos
+                var washingtonRef = db.collection("users").doc(idDoc);
+                return washingtonRef.update({
+                    first: first.value,
+                    last: last.value,
+                    born: parseInt(born.value)
+                })
+                    .then(() => {
+                        console.log("Document successfully updated!");
+
+                        btnEditar.innerHTML = 'Guardar';
+                        first.value = '';
+                        last.value = '';
+                        born.value = '';
+                    })
+                    .catch((error) => {
+                        console.error("Error updating document: ", error);
+                    });
+            }
+        }
+
+        // DELETE
+        function borrarDoc(idDoc) {
+            // Borrar datos
+            db.collection("users").doc(idDoc).delete()
+                .then(() => {
+                    console.log("Document successfully deleted!");
+                }).catch((error) => {
+                    console.error("Error removing document: ", error);
+                });
+        }
+
+        /* STORAGE */
+        // CREATE
+        function crearStorage() {
+            // Variables de entrada
+            const fileInput = document.querySelector('input[type=file]');
+            const file = fileInput.files[0];
+
+            // Comprimir imagenes
+            comprimirImagen(file, 800, 800, 0.8, function (compressedFile) {
+
+                // Añadir archivos a carpeta de FOTOS y poner de nombre un ID aleatorio
+                storage.ref().child(`fotos/${Date.now()}`).put(compressedFile)
+                    .then(() => {
+                        console.log('Archivo subido');
+                        fileInput.value = '';
+                        location.reload();
+                    }).catch((error) => {
+                        console.error('Error al subir archivo:', error);
+                    });
+
+            });
+        }
+
+        // READ
+        function leerStorage() {
+            // Acceder a archivos de carpeta FOTOS del storage
+            storage.ref('fotos').listAll()
+                .then((result) => {
+                    result.items.forEach((imageRef) => {
+
+                        // Leer archivos por URL
+                        imageRef.getDownloadURL()
+                            .then((url) => {
+                                console.log(`URL para ${imageRef.name}: ${url}`);
+                                // Declarar urls
+                                const imgs = document.querySelector(`#tabla-archivos tbody`);
+                                imgs.innerHTML += `
+                                    <tr>
+                                        <td>
+                                            <img src="${url}" alt="" height="100px" width="150px">
+                                        </td>
+                                        <td>
+                                            ${imageRef.name}
+                                        </td>
+                                        <td>
+                                            <a href="${url}" target="_blank">
+                                                <button>URL</button>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <button onclick="borrarStorage('${imageRef.name}')">Eliminar</button>
+                                        </td>
+                                        <td>
+                                            <button onclick="editarStorage('${imageRef.name}')">Editar</button>
+                                        </td>
+                                    </tr>
+                                `;
+                            }).catch((error) => {
+                                console.error('Error al obtener la URL de la imagen:', error);
+                            });
+
+                    });
+                }).catch((error) => {
+                    console.error('Error al listar las imágenes:', error);
+                });
+        }
+        leerStorage();
+
+        // UPDATE
+        function editarStorage(nombreArchivo) {
+            const fileInput = document.querySelector('input[type=file]');
+            // Abrir el selector de archivos
+            fileInput.click();
+            // Cuando se selecciona un archivo
+            fileInput.onchange = (event) => {
+                const file = event.target.files[0];
+                if (file) {
+
+                    // Comprimir imagenes
+                    comprimirImagen(file, 800, 800, 0.8, function (compressedFile) {
+
+                        // Reemplazar el archivo existente
+                        storage.ref(`fotos/${nombreArchivo}`).put(compressedFile)
+                            .then(() => {
+                                console.log('Archivo editado');
+                                fileInput.value = '';
+                                location.reload();
+                            })
+                            .catch((error) => {
+                                console.error('Error al editar el archivo:', error);
+                            });
+
+                    });
+
+                }
+            };
+        }
+
+        // DELETE
+        function borrarStorage(nombreArchivo) {
+            // Borrar archivos
+            storage.ref().child(`fotos/${nombreArchivo}`).delete().then(() => {
+                console.log('Archivo eliminado');
+                location.reload();
+            }).catch((error) => {
+                console.error('Error al eliminar el archivo:', error);
+            });
+        }
+
+        /* COMPRIMIR IMAGENES */
+        function comprimirImagen(file, maxWidth, maxHeight, quality, callback) {
+            const reader = new FileReader();
+            // Leer el archivo como Data URL
+            reader.readAsDataURL(file);
+            reader.onload = function (event) {
+                const img = new Image();
+                img.src = event.target.result;
+                img.onload = function () {
+                    // Crear un canvas
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
+                    // Mantener la proporción de la imagen
+                    if (width > maxWidth) {
+                        height *= maxWidth / width;
+                        width = maxWidth;
+                    }
+                    if (height > maxHeight) {
+                        width *= maxHeight / height;
+                        height = maxHeight;
+                    }
+                    // Asignar nuevo tamaño al canvas
+                    canvas.width = width;
+                    canvas.height = height;
+                    // Dibujar la imagen en el canvas redimensionado
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    // Convertir el canvas a un Blob comprimido
+                    canvas.toBlob(function (blob) {
+                        callback(blob); // Devolver el Blob comprimido
+                    }, 'image/jpeg', quality); // Comprimir al formato JPEG con calidad especificada (entre 0 y 1)
+                };
+            };
+        }
+    </script>
+</body>
+
+</html>
